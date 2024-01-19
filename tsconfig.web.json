@@ -1,0 +1,44 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+  "include": [
+    "src/renderer/src/env.d.ts",
+    "src/renderer/src/**/*",
+    "src/renderer/src/**/*.vue",
+    "src/preload/*.d.ts",
+    "src/data/**/*.ts",
+    "src/data/*.ts",
+    "src/char/**/*.ts",
+    "src/char/*.ts",
+    "src/menu/*.ts",
+    "src/lib/*.ts",
+    "src/locales/i18n.config.ts"
+, "src/preload/AppConfigIPC.ts", "src/preload/LocalDBClientIPC.ts", "src/preload/LocalMLTClientIPC.ts", "src/preload/MarkDBClientIPC.ts"  ],
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
+    "strict": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@model/*": ["src/data/model/*"],
+      "@config/*": ["src/data/config/*"],
+      "@components/*": ["src/renderer/src/components/*"],
+      "@renderer/*": ["src/renderer/src/*"]
+    }
+  }
+}

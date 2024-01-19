@@ -1,0 +1,25 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
+  "include": [
+    "electron.vite.config.*",
+    "src/main/*",
+    "src/preload/*",
+    "src/data/**/*",
+    "src/data/**/*.ts",
+    "src/char/*.ts",
+    "src/char/**/*.ts",
+    "src/lib/*.ts",
+    "src/menu/*.ts",
+    "src/locales/i18n.config.ts"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "types": ["electron-vite/node"],
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@model/*": ["src/data/model/*"],
+      "@config/*": ["src/data/config/*"],
+    }
+  }
+}

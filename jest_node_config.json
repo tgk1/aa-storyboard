@@ -1,0 +1,22 @@
+{
+  "verbose": true,
+  "moduleFileExtensions": ["ts", "tsx", "js"],
+  "testEnvironment": "node",
+  "preset": "ts-jest/presets/js-with-babel-esm",
+  "extensionsToTreatAsEsm": [".ts"],
+  "transform": {
+      "^.+\\.ts$": ["ts-jest", { "tsconfig": "tsconfig.test.json", "useESM": true } ]
+  },
+  "testMatch": [
+      "**/test/unit/*.[jt]s"
+	],
+  "moduleNameMapper": {
+    "src(.*)$": "<rootDir>/src/$1",
+    "@/(.*)$": "<rootDir>/src/$1",
+    "@model/(.*)$": "<rootDir>/src/data/model/$1",
+    "@config/(.*)$": "<rootDir>/src/data/config/$1"
+  },
+  "transformIgnorePatterns": [
+    "/node_modules/(?!lodash-es)"
+  ]
+}

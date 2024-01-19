@@ -1,0 +1,319 @@
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary-color: #409EFF;
+  /*
+    --primary-link: #bb3333;
+    --primary-hover: #c2185b;
+    --primary-inverse: #FFF;
+    --color: #000;
+  */
+    --primary-focus: #c5e1ff;
+    --el-radio-button-checked-bg-color1: #c5e1ff;
+    --font-color-r: #fff;
+    --font-color: #000;
+    --font-sub-color: #545454;
+    --font-sub-color1: #747474;
+    --font-sub-color2: #949494;
+    --bg-color0: #FCFCFC;
+    --bg-color1: #F5F7FA;
+    --bg-color2: #F3F5F9;
+    --bg-color3: #F1F2F7;
+    --bg-focus-color: #ecf5ff;
+    --list-color: #fafbfc;
+    --list-hover-color: #eaeef4;
+    --input-color: #606266;
+    --input-bg-color: #fff;
+    --input-border-color: #DCDFE6;
+    --input-radio-checked-color: #FCFCFC;
+    --input-disabled-color: #fff;
+    --input-dropdown-bg-color: #F5F7FA;
+    --input-dropdown-bg-color2: #fff;
+    --textarea-mini-bg-color: #fcfcfc;
+    --main-bg-color: #FCFCFC;
+    --aa-bg-color: #FCFCFC;
+    --aa-header-bg-color: #f0f0f0;
+    --scrollbar-bg-color: #f2f2f2;
+    --close-bg-color: #fff;
+    --nav-icon-color: #606266;
+
+    --notice-button-color: #F5F7FA;
+    --notice-button-color_back: #fff;
+    --notice-icon-color: #488728;
+    --warning-icon-color: #cc3333;
+
+    --border-color: #E4E7ED;
+
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+    --font-size: 14px;
+
+    --typography-spacing-vertical2: 0.4rem;
+    --typography-spacing-vertical: 0.4rem;
+
+    --spacing-custom: 3rem;
+    --border-radius: 0;
+    line-height: 1.5;
+    min-width: 900px;
+
+    --mark0: #333333;
+    --mark1: #0077f3;
+    --mark2: #488728;
+    --mark3: #bd7b18;
+    --mark4: #f02424;
+    --canvas-bg-color: #fff;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root{
+    --primary-color: #409EFF;
+    --font-color: #eee;
+    --font-sub-color: #ddd;
+    --bg-color0: #424242;
+    --bg-color1: #141414;
+    --bg-color2: #383838;
+    --bg-color3: #222;
+    --bg-hover-color: #4c4c51;
+    --list-color: #161616;
+    --list-hover-color: #424242;
+    --input-color: #fff;
+    --input-bg-color: #646464;
+    --input-border-color: #afb6c6;
+    --input-radio-checked-color: #424242;
+    --input-disabled-color: #646464;
+    --input-dropdown-bg-color: #333;
+    --input-dropdown-bg-color: #141414;
+    --textarea-mini-bg-color: #cfcfcf;
+    --textarea-bg-color: #aaa;
+    --main-bg-color: #141414;
+    --aa-bg-color: #141414;
+    --aa-header-bg-color: #646464;
+    --scrollbar-bg-color: #545454;
+    --close-bg-color: #666;
+    --nav-icon-color: #ccc;
+
+    --notice-button-color: #141414;
+    --notice-button-color_back: #000;
+    --notice-icon-color: #a2dc86;
+
+    --border-color: #666;
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+    --font-size: 14px;
+
+    --typography-spacing-vertical2: 0.4rem;
+    --typography-spacing-vertical: 0.4rem;
+
+    --spacing-custom: 3rem;
+    --border-radius: 0;
+    line-height: 1.5;
+    min-width: 900px;
+
+    --mark0: #cccccc;
+    --mark1: #419eff;
+    --mark2: #67c239;
+    --mark3: #e6a23b;
+    --mark4: #f56c6c;
+    --canvas-bg-color: #eee;
+
+    --el-text-color-regular: #ccc;
+    --el-menu-text-color: #eee;
+    --el-button-bg-color:var(--bg-color0);
+    --el-fill-color-blank:var(--bg-color0);
+    --el-fill-color-light:var(--bg-color0);
+    --el-bg-color-overlay:var(--bg-color0);
+    --el-bg-color:var(--bg-color1);
+    --el-radio-text-color:var(--font-color);
+    --el-text-color-primary:var(--font-color);
+    --el-text-color-regular:var(--font-color);
+    --el-messagebox-title-color: var(--font-color);
+    }
+}
+
+@font-face {
+  font-family: "Saitamaar";
+  src: url("/fonts/Saitamaar.woff2") format("woff2");
+}
+
+html {
+  height: 100%;
+  line-height: 1.5;
+  font-size: 14px;
+  font-family: "游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN","Hiragino Kaku Gothic Pro",メイリオ,Meiryo,sans-serif;
+}
+body {
+  color: var(--font-color);
+  background: var(--bg-color1);
+  margin: 0;
+  height: 100vh;
+}
+table { border-color:var(--border-color); }
+p {
+  padding:4px 2px 4px 2px;
+  line-height: 1.6rem;
+}
+h1, h2, h3, h4, h5 {
+    margin: 4px 0 4px 0;
+    line-height: 1.5;
+    font-weight: normal;
+}
+h2,h3,h4,h5 {
+  border-bottom: solid 1px #999;
+}
+a,[role="link"] {
+  --color: var(--primary-link);
+  outline: none;
+  color: var(--color);
+}
+a:hover {
+  text-decoration: underline;
+}
+p {
+  margin-block-start: 0.2em;
+  margin-block-end: 0.2em;
+}
+dt {
+  font-weight: bolder;
+}
+
+
+.invisible {
+  display: none;
+}
+.primary {
+  color: #409EFF;
+}
+.error {
+  color:#fcfcfc;
+  background-color: #F56C6C;
+}
+.warning {
+  color: #E6A23C;
+}
+.active {
+  background-color: var(--bg-color0);
+}
+
+/*
+ element-plusで、気になるところの変更
+*/
+
+.el-menu-item i {
+  color: var(--nav-icon-color);
+}
+.el-select__wrapper, .el-button {
+  color: var(--font-sub-color);
+  background-color: var(--bg-color0);
+}
+.el-input-group__append {
+  background-color: var(--bg-color0);
+}
+.el-select__wrapper {
+  background-color: var(--bg-color0);
+}
+.el-message-box__title {
+  color: var(--font-color);
+}
+/* element-ui cssのdropdownはここに記述しないと適用されない(vue内はダメ)
+ツールバーのボタンはvue内で
+*/
+.el-dropdown .el-button-group .el-button {
+  background-color: var(--input-dropdown-bg-color2);
+}
+.el-dropdown .el-button-group button.el-dropdown__caret-button {
+  background-color: var(--bg-color2);
+}
+.el-menu-item:focus, .el-menu-item:hover {
+  color: var(--primary-color);
+}
+.el-radio {
+  color: var(--font-color);
+}
+.el-radio-button__orig-radio {
+  color: var(--primary-color);
+}
+.el-button--primary {
+  color: var(--font-color-r);
+  background-color: var(--primary-color);
+}
+.el-dropdown:focus {
+  outline: 1px #fff solid;
+}
+.el-dropdown:hover {
+  outline: 1px #fff solid;
+}
+.el-dropdown-link:focus {
+  outline: none;
+}
+.el-dropdown-link:hover {
+  outline: none;
+}
+:focus-visible {
+  outline: none;
+}
+.el-radio {
+  --el-text-color-regular: #000;
+  --el-radio-text-color: #000;
+  --el-text-color-regular: #000;
+}
+.el-input-group__append button.el-button {
+  margin-top:0px;
+  margin-bottom:0px;
+  height:26px;
+}
+.el-radio-button--small .el-radio-button__inner {
+  padding: 2px 11px 1px 11px;
+  font-size: 11px;
+  background-color: var(--bg-color1);
+}
+.el-button--small {
+  padding-top: 7px; /* vue-material-iconが微妙に高さが合わないので調整 */
+}
+.radio-ui-padding {
+  padding: 0px 6px 4px 0px;
+}
+.ui-padding {
+  padding-right: 6px;
+}
+.ui-padding .r {
+  padding-right: 6px;
+}
+.mark0 { color: var(--mark0); }
+.mark1 { color: var(--mark1); }
+.mark2 { color: var(--mark2); }
+.mark3 { color: var(--mark3); }
+.mark4 { color: var(--mark4); }
+.mark0:hover { color: var(--mark0); }
+.mark1:hover { color: var(--mark1); }
+.mark2:hover { color: var(--mark2); }
+.mark3:hover { color: var(--mark3); }
+.mark4:hover { color: var(--mark4); }
+.mark0:hover { color: var(--mark0); }
+.mark1:focus { color: var(--mark1); }
+.mark2:focus { color: var(--mark2); }
+.mark3:focus { color: var(--mark3); }
+.mark4:focus { color: var(--mark4); }
+
+.green {
+  color: var(--notice-icon-color);
+}
+.red {
+  color: var(--warning-icon-color);
+}
+.koma-toolbar .el-button {
+  border-radius: 0 !important;
+}
+.dialogPad {
+  width: 260px;
+  padding: 0.4rem;
+  display:inline-table;
+}
+.dialogPad img {
+  border:1px #ccc solid;
+}
+dd {
+  margin: 0.2rem 0 1rem 1rem;
+}

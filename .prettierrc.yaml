@@ -1,0 +1,7 @@
+singleQuote: true
+semi: true
+printWidth: 120
+trailingComma: none
+no-unused-vars: false
+singleAttributePerLine: false
+"vue/first-attribute-linebreak":
