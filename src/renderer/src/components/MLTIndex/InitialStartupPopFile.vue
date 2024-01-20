@@ -7,12 +7,12 @@
       :visible="visiblePopInitialStartupFile"
       :virtual-ref="initalStartupRef"
       width="370"
-      title="ここからスタート"
+      :title="$t('IDX-L.StartFromHere')"
       content=""
       virtual-triggering
     >
       <el-button size="small"><NotePlusOutlineIcon class="green" :size="18" /></el-button>
-      ボタンで、スレファイルを作成します。
+      {{ $t('IDX-L.CreateThreadFile') }}
     </el-popover>
   </template>
 </template>

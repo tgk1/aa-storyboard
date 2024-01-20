@@ -43,7 +43,9 @@
     "AccessDate-ASC": "アクセス日時(昇順)",
     "AccessDate-DESC": "アクセス日時(降順)",
     "UseDate-ASC": "コピー日時(昇順)",
-    "UseDate-DESC": "コピー日時(降順)"
+    "UseDate-DESC": "コピー日時(降順)",
+    "StartFromHere": "ここからスタート",
+    "CreateThreadFile": "ボタンで、スレファイルを作成します。"
   },
 
   "COMMENT================================================ MLTIndex Right Side": "MLTIndexMain Toolbar, Tab, KomaToolbar",
@@ -72,7 +74,10 @@
     "InsertKoma": "この位置に新規コマ作成",
     "PasteKoma": "ペースト",
     "EditKoma": "編集",
-    "TrashKoma": "削除"
+    "TrashKoma": "削除",
+
+    "CreationStart": "作成開始",
+    "CreateFrame": "ボタンで、コマを作成します。"
   },
 
   "COMMENT================================================ MLTIndex-ConfigView": "ConfigView",

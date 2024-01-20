@@ -7,12 +7,12 @@
       :visible="visiblePopInitialStartupKoma > 1"
       :virtual-ref="initalStartupRef"
       width="370"
-      title="スレ作成開始"
+      :title="$t('IDX-R.CreationStart')"
       content=""
       virtual-triggering
     >
       <el-button size="small" class="green"><plus-box-icon :size="16" /></el-button>
-      ボタンで、コマを作成します。
+      {{ $t('IDX-R.CreateFrame') }}
     </el-popover>
   </template>
 </template>

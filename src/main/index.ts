@@ -265,7 +265,7 @@ ipcMain.on('quit_appWindowAPI', async () => {
 });
 
 // auto updater
-electronApp.setAppUserModelId('net.r401.mlt2');
+electronApp.setAppUserModelId('net.r401.aa-storyboard');
 autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
   const dialogOpts = {
     buttons: ['Restart', 'Later'],

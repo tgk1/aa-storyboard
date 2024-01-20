@@ -1,10 +1,12 @@
-appId: net.r401.yaruomlt
+appId: net.r401.aa-storyboard
 productName: 'AA Storyboard'
 directories:
   buildResources: build
 files:
   - '!**/.vscode/*'
   - '!src/*'
+  - '!scripts/*'
+  - '!node_modules/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
@@ -24,10 +26,14 @@ mac:
     - target: dmg
       arch:
         - arm64
+  entitlements: build/entitlements.mac.plist
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  category: 'public.app-category.productivity'
+  hardenedRuntime: true
+  gatekeeperAssess: true
   notarize: false
 dmg:
   artifactName: ${name}-${arch}-${version}.${ext}
