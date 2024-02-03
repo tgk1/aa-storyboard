@@ -135,7 +135,7 @@
 
 @font-face {
   font-family: "Saitamaar";
-  src: url("/fonts/Saitamaar.woff2") format("woff2");
+  src: url("../fonts/Saitamaar.woff2") format("woff2");
 }
 
 html {

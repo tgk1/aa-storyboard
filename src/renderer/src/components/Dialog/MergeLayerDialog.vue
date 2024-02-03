@@ -1,13 +1,29 @@
 <template>
   <el-dialog :title="props.komaPart.name" style="width: 620px">
     <el-input v-model="name" @change="setKomaPart" />
-    <h5>{{ $t('D.MergeLayerConfig') }}</h5>
+    <br />
+    <br />
+    <h3>{{ $t('D.MergeLayerConfig') }}</h3>
     <el-radio-group v-model="mode">
       <div v-for="key of MergeLayerArray" :key="key" class="dialogPad">
         <el-radio :label="key" @change="$emit('set-merge-layer-mode', key)">
           {{ $t('D.ML_mode' + key) }}
         </el-radio>
-        <img :src="linkImg(key)" />
+        <div v-if="key == 0">
+          <Mode0png />
+        </div>
+        <div v-else-if="key == 1">
+          <Mode1png />
+        </div>
+        <div v-else-if="key == 2">
+          <Mode2png />
+        </div>
+        <div v-else-if="key == 3">
+          <Mode3png />
+        </div>
+        <div v-if="key == 4">
+          <Mode4png />
+        </div>
       </div>
     </el-radio-group>
   </el-dialog>
@@ -16,6 +32,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { KomaPart, MergeLayerArray } from '@model/index';
+import Mode0png from './mode0_png.vue';
+import Mode1png from './mode1_png.vue';
+import Mode2png from './mode2_png.vue';
+import Mode3png from './mode3_png.vue';
+import Mode4png from './mode4_png.vue';
 
 // props // emits //
 interface Props {
@@ -36,9 +57,11 @@ watch(props, () => {
   mode.value = props.komaPart.mode;
 });
 
+/*
 function linkImg(id: number) {
-  return '/mergeLayer/mode' + id + '.png';
+  return `./mode${id}.png`;
 }
+*/
 
 function setKomaPart() {
   const kpart = props.komaPart;

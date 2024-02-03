@@ -92,7 +92,7 @@
     "LocalFolderMLT_foler": "AAまとめファイル用フォルダ",
     "LocalFolderMLT_info": "HukuTempフォルダなどの参照用を指定します。mlt/astファイルを表示します。",
     "Win32FSBUG_info": "ネットワークドライブ上のファイルが表示されない場合にチェックしてください。ピリオドつきのフォルダ表示に制限があります。",
-    "AA_Download": "AAファイルまとめをダウンロード",
+    "AA_Download": "AAまとめファイル(HukuTemp)をダウンロード",
     "Download_font_from_aahub": "AAHubからフォントを探す",
     "Font_info_1": "MS Pゴシックの16サイズとSaitamaar以外のフォントではズレて見えることがあります。",
     "Font_info_2": "キャンバスとテキストエディターではズレが起きないSaitamaarフォント固定です。",

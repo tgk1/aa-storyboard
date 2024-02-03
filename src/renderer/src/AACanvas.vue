@@ -123,7 +123,6 @@ function passiveIPC() {
     filePath.value = dic['path'];
     koma.value = JSON.parse(dic['strKoma']);
     kpClient = new KomaPartsClient(filePath.value, koma.value.id);
-    //komaParts.value = JSON.parse(dic['strKomaParts']);
     updateList();
   });
 
@@ -136,7 +135,12 @@ function passiveIPC() {
 
   window.appWindow.saveTextEditorSTEP2((_event, dic) => {
     const kpart = JSON.parse(dic['strKomaPart']);
-    kpClient.setKomaPart(kpart);
+    for (const kp of komaParts.value) {
+      if (kp.id == kpart.id) {
+        kp.data = kpart.data;
+      }
+    }
+    setKomaPart(kpart);
     if (dic['strSplitKomaPart']) {
       const skpart = JSON.parse(dic['strSplitKomaPart']);
       kpClient.insertKomaPart(skpart);
@@ -370,7 +374,7 @@ function configMergeLayerDialog(komaPart: KomaPart) {
 function setMergeLayerMode(mlMode: number) {
   if (configKomaPart.value.id == 0) return;
   configKomaPart.value.mode = mlMode;
-  kpClient.setKomaPart(configKomaPart.value);
+  setKomaPart(configKomaPart.value);
   saveData();
 }
 </script>
