@@ -1,3 +1,4 @@
+import { AppConfig } from '@/data/config/AppConfig';
 import { AppActivity } from '@/data/model';
 import { Menu } from 'electron';
 
@@ -192,6 +193,11 @@ export function enableMenu(act: AppActivity) {
       if (item) {
         item.enabled = menuIDs[id];
       }
+    }
+    const item = menu.getMenuItemById('Export');
+    if (item) {
+      const file = AppConfig.getCurrentFile();
+      item.enabled = file.match(/\.db/i) != null;
     }
   }
 }

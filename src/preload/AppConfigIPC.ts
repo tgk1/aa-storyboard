@@ -2,7 +2,7 @@
 
 import { ipcRenderer, ipcMain, IpcMainInvokeEvent, dialog, app } from 'electron';
 import { AppConfig, AppConfigParam } from '@config/AppConfig';
-import { Theme } from '@/data/model';
+import { AppActivity, Theme } from '@/data/model';
 import { str2theme } from '@/data/model/Theme';
 
 // window.ipc.* の宣言(なくても動くがTypeScriptで警告がでる対策)
@@ -18,6 +18,8 @@ export interface AppConfigAPI {
   setCurrentFile: (file: string) => void;
   mkAppDir: () => void;
   getLocale: () => string;
+
+  setExportMenu: (dic: { act: AppActivity; file: string }) => void;
 }
 
 declare global {
@@ -39,7 +41,9 @@ export const appConfigAPI = {
   getReplicaFolder:()       => ipcRenderer.sendSync('getReplicaFolder_AppConfig'),
   setCurrentFile:(file: string) => ipcRenderer.send('setCurrentFile_AppConfig', file),
   mkAppDir:() => ipcRenderer.send('mkAppDir_AppConfig'),
-  getLocale:() => ipcRenderer.sendSync('getLocale_AppConfig')
+  getLocale:() => ipcRenderer.sendSync('getLocale_AppConfig'),
+
+  setExportMenu:(dic: { act: AppActivity, file: string }) => ipcRenderer.invoke('setExportMenu_AppConfig', dic)
 };
 
 export function appConfigIPC() {
@@ -78,5 +82,11 @@ export function appConfigIPC() {
 
   ipcMain.on('getLocale_AppConfig', (event) => {
     event.returnValue = app.getLocale();
+  });
+
+  ipcMain.handle('setExportMenu_AppConfig', async (_event: IpcMainInvokeEvent, arg) => {
+    const act = arg['act'] as unknown as AppActivity;
+    const file = arg['file'] as unknown as string;
+    AppConfig.setExportMenu(act, file);
   });
 }

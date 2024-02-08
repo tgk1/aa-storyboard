@@ -108,6 +108,7 @@ onMounted(() => {
   startScrollDetector();
   updateList();
   passiveIPC();
+  console.log('QQ ACT:' + props.appActivity);
 });
 
 onUnmounted(() => {
@@ -172,6 +173,9 @@ async function updateList() {
           setRecent();
           setSortable();
           checkInitialKomaFilie();
+          if (props.appActivity == AppActivity.MainIndex) {
+            window.appConfig.setExportMenu({ act: props.appActivity, file: fileItem.value.url });
+          }
         });
       }, 1);
     });

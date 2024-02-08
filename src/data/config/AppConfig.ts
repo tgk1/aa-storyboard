@@ -2,8 +2,10 @@ import { app, nativeTheme } from 'electron';
 import Store from 'electron-store';
 import path from 'path';
 import fs from 'fs';
+import { Menu } from 'electron';
 
 import { Theme } from '@model/Theme';
+import { AppActivity } from '../model';
 
 /*
 本来は他の設定値保存(StoreConfig*)と同じにしたいのだが、
@@ -132,5 +134,15 @@ export class AppConfig {
     if (!fs.existsSync(dir2)) {
       fs.mkdirSync(dir2);
     }
+  }
+
+  static setExportMenu(act: AppActivity, file: string) {
+    const menu = Menu.getApplicationMenu();
+    if (menu == null) return;
+
+    const item = menu.getMenuItemById('Export');
+    if (item == null) return;
+
+    item.enabled = act == AppActivity.MainIndex && file.match(/\.db/i) != null;
   }
 }
