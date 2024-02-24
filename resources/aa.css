@@ -1,0 +1,51 @@
+@font-face {
+    font-family: "Saitamaar";
+    src: url("Saitamaar.woff2") format("woff2");
+}
+body {
+    padding: 0;
+    margin:0;
+    line-height: 1.5;
+    font-size: 14px;
+    font-family: "游ゴシック Medium",YuGothic,YuGothicM,"Hiragino Kaku Gothic ProN","Hiragino Kaku Gothic Pro",メイリオ,Meiryo,sans-serif;
+    background-color: #fcfcfc;
+}
+h1 {
+    font-size: 15px;
+    margin: 0;
+    padding: 8px 4px 0px 8px;
+    font-weight: normal;
+    line-height: 1;
+    height: 21px;
+
+    background-color: #F0F1F6;
+    border-top: solid #DCDFE6 1px;
+    border-bottom: solid #DCDFE6 1px;
+    color: #303133;
+}
+.koma {
+    margin: 0 0 -1px 0;
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+}
+.koma_header a {
+    font-size: 12px;
+    padding: 2px 0.7em 2px 0.5em;
+    color: #666;
+    vertical-align: top;
+    border-top: solid 01px #f0f0f0;
+    border-bottom: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+    background-color: #f0f0f0;
+}
+.aa {
+    font-family: 'Saitamaar';
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    white-space: pre;
+    overflow: auto;
+    white-space:nowrap;
+    background-color: #fcfcfc;
+	padding-left: 16px;
+}

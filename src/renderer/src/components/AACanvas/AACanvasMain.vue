@@ -51,6 +51,7 @@
             </el-tooltip>
           </el-button-group>
           <span
+            v-if="editMiniKPartID != kpart.id"
             :id="'koma-part-name-handle-' + kpart.id"
             class="koma-part-name-handle"
             @mousedown.exact="selectKomaPart(kpart.id)"
@@ -157,6 +158,7 @@ let canvasHeight = 0;
 let mc: MergeCore = new MergeCore(null, fontSize.value);
 const gridWidth: Ref<number> = ref(mc.gridWidth);
 const gridHeight: Ref<number> = ref(mc.gridHeight);
+const editMiniKPartID: Ref<number> = ref(-1);
 
 // vue lifecycle
 onMounted(() => {
@@ -321,6 +323,7 @@ function textEditMini(kpart: KomaPart) {
   const elmc = view.getElementsByClassName('koma-part-data')[0];
   if (!(elmc instanceof HTMLElement)) return;
   if (!(editor instanceof HTMLTextAreaElement)) return;
+  editMiniKPartID.value = kpart.id;
 
   editor.value = kpart.data;
   editor.style.width      = elmc.clientWidth + 200 + 'px';
@@ -336,6 +339,7 @@ function textEditMini(kpart: KomaPart) {
 
 function canvasClick() {
   selectedKomaPartsID.value = {};
+  editMiniKPartID.value = -1;
   Promise.resolve()
     .then(wait(100))
     .then(() => {

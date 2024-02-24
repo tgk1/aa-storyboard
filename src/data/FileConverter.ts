@@ -140,14 +140,16 @@ export class FileConverter {
       fs.closeSync(fd);
 
       const from_fontfile = app.isPackaged
-        ? path.join(process.resourcesPath, 'Saitamaar.woff2')
-        : path.join(__dirname, '../../src/renderer/public/fonts/Saitamaar.woff2');
+        ? path.join(process.resourcesPath, './resources/Saitamaar.woff2')
+        : path.join(__dirname, '../../resources/Saitamaar.woff2');
       const to_fontfile = path.resolve(path.dirname(mltFilePath), 'Saitamaar.woff2');
+      console.log(from_fontfile);
 
       const from_cssfile = app.isPackaged
-        ? path.join(process.resourcesPath, 'aa.css')
+        ? path.join(process.resourcesPath, './resources/aa.css')
         : path.join(__dirname, '../../resources/aa.css');
       const to_cssfile = path.resolve(path.dirname(mltFilePath), 'aa.css');
+      console.log(from_cssfile);
 
       fs.copyFileSync(from_fontfile, to_fontfile);
       fs.copyFileSync(from_cssfile, to_cssfile);

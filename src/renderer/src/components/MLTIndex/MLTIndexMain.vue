@@ -101,6 +101,9 @@ watch(
   () => {
     updateItem(fileItem.value);
     setSortable();
+    if (props.appActivity == AppActivity.MainIndex) {
+      window.appConfig.setCurrentFile(fileItem.value.url);
+    }
   }
 );
 
@@ -108,7 +111,7 @@ onMounted(() => {
   startScrollDetector();
   updateList();
   passiveIPC();
-  console.log('QQ ACT:' + props.appActivity);
+  console.log('ACT:' + props.appActivity);
 });
 
 onUnmounted(() => {

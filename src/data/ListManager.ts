@@ -28,7 +28,6 @@ export class ListManager {
 
   // Doc MLT取得
   getKomaList(item: Item): Promise<KomaList> {
-    window.appConfig.setCurrentFile(item.url);
     switch (item.type) {
       case ItemType.WebMLT:
         return this.komaFromWeb(item);

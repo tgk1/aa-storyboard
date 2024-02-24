@@ -204,7 +204,7 @@ function cssTabBorder(mode: TabMode, index: number, tabIndex: number): string {
 }
 span.name {
   display: block;
-  max-width: 130px;
+  max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   float: left;
