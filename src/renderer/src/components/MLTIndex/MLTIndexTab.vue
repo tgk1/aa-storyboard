@@ -197,7 +197,8 @@ function cssTabBorder(mode: TabMode, index: number, tabIndex: number): string {
 .tab-title {
   color: var(--font-color);
   background-color: var(--bg-color1);
-  max-width: 200px;
+  max-width: 140px;
+  min-width: 120px;
   padding: 6px 4px 4px 8px;
   font-size: 12px;
   cursor: default;
@@ -209,10 +210,13 @@ span.name {
   text-overflow: ellipsis;
   float: left;
 }
-span.close,
 span.icon {
   display: block;
   float: left;
+}
+span.close {
+  display: block;
+  float: right;
 }
 .tab-title > .icon {
   vertical-align: bottom;
