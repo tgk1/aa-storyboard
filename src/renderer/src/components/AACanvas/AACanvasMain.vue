@@ -382,7 +382,7 @@ function selectKomaParts(id: number) {
 
 // KomaPartの並び換え機能 (ダブルクリックしたKomaPartを最上位にする)
 function sortKomaPartsTopLayer(komaPart: KomaPart) {
-  emits('sort-koma-parts', komaPart.id, komaPart.order_num, getTopOrderNum());
+  emits('sort-koma-parts', komaPart.id, komaPart.order_num, getTopOrderNum() + 1);
 }
 
 function openTextEditor(kpart: KomaPart) {

@@ -466,38 +466,22 @@ export class LocalDBClient {
 
     if (newOrderNum > oldOrderNum) {
       const stmt1 = this.db.prepare(
-        'SELECT * FROM koma_parts WHERE parent_id = ? AND order_num >= ? AND order_num <= ? ORDER BY order_num ASC'
+        'SELECT * FROM koma_parts WHERE parent_id = ? AND order_num > ? AND order_num <= ? ORDER BY order_num ASC'
       );
       const rows = stmt1.all(parent_id, oldOrderNum, newOrderNum);
-      let j = true;
-      let i = 0;
       for (const row of rows) {
-        // 何かのはずみで重複したときのため必ず連番になるようにしている
-        if (j) {
-          j = false;
-          i = row.order_num;
-        }
-        i--;
-        stmt2.run(i, row.id);
+        stmt2.run(row.order_num - 1, row.id);
       }
       stmt2.run(newOrderNum, id);
     }
 
     if (newOrderNum < oldOrderNum) {
       const stmt1 = this.db.prepare(
-        'SELECT * FROM koma_parts WHERE parent_id = ? AND order_num >= ? AND order_num <= ?  ORDER BY order_num ASC'
+        'SELECT * FROM koma_parts WHERE parent_id = ? AND order_num >= ? AND order_num < ? ORDER BY order_num ASC'
       );
       const rows = stmt1.all(parent_id, newOrderNum, oldOrderNum);
-      let j = true;
-      let i = 0;
       for (const row of rows) {
-        // 何かのはずみで重複したときのため必ず連番になるようにしている
-        if (j) {
-          j = false;
-          i = row.order_num;
-        }
-        i++;
-        stmt2.run(i, row.id);
+        stmt2.run(row.order_num + 1, row.id);
       }
       stmt2.run(newOrderNum, id);
     }

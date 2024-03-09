@@ -263,6 +263,9 @@ function clearAllKomaParts() {
 }
 
 function closeEditor() {
+  for (const kp of komaParts.value) {
+    kpClient.setKomaPart(kp);
+  }
   saveData();
   close();
 }
