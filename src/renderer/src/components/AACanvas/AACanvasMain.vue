@@ -238,6 +238,10 @@ function moveKomaPart(kpart: KomaPart) {
   const cvframe = document.getElementById('aa-canvas-main-frame');
   if (!cvframe) return;
   const PAD = 70 + 20; // --el-header:70  --el-header-padding: 20
+  let p = 0; // fontSize 6だとYの丸めがうまくいかないので下駄をつけてる。
+  if (fontSize.value == 6) {
+    p = 1;
+  }
 
   elm.onmousedown = function (event: MouseEvent) {
     document.onmouseup = () => {
@@ -282,7 +286,7 @@ function moveKomaPart(kpart: KomaPart) {
     }
 
     function modifyPositionY(y: number, height: number): number {
-      y = Math.round((y - canvasMinY) / mc.gridHeight) * mc.gridHeight + canvasMinY;
+      y = Math.round((y - canvasMinY + p) / mc.gridHeight) * mc.gridHeight + canvasMinY;
       y = y < canvasMinY ? canvasMinY : y;
       y = y > canvasMinY + canvasHeight - height - 22 ? canvasMinY + canvasHeight - height - 22 : y;
       return y;
