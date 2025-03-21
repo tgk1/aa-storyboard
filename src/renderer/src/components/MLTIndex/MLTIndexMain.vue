@@ -5,12 +5,40 @@
       :sections="list.sections"
       :enable-trash-button="enableTrashButton"
       @add-koma="insertNewKomaAndEdit"
-      @jump-to-edge="jumpEdge"
-      @jump-to-section="jumpSection"
+      @find-koma="findKomaUIOpen"
+      @move-to-edge="moveToEdge"
+      @move-to-koma="moveToKoma"
+      @move-by-number="moveByNumberUIOpen"
       @undo-trash="undoTrash"
       @empty-trash="emptyTrash"
     />
-
+    <div v-if="visibleFindKomaUI" class="searchUI">
+      <el-input
+        ref="findKomaInput"
+        v-model="findKomaVal"
+        size="small"
+        @keyup.esc.stop="findKomaUIClose"
+        @keyup.enter.stop="findKoma(true)"
+      />
+      <el-button-group>
+        <el-button size="small" @click="findLoop(true)"><chevron-down-icon :size="16" /></el-button>
+        <el-button size="small" @click="findLoop(false)"><chevron-up-icon :size="16" /></el-button>
+        <el-button size="small" @click="findKomaUIClose"><close-icon :size="16" /></el-button>
+      </el-button-group>
+    </div>
+    <div v-if="visibleMoveByNumberUI" class="searchUI">
+      <el-input
+        ref="moveByNumberInput"
+        v-model="moveByNumberVal"
+        size="small"
+        @keyup.esc.stop="moveByNumberUIOpen"
+        @keyup.enter.stop="moveByNumber"
+      />
+      <el-button-group>
+        <el-button size="small" @click="moveByNumber"><arrow-bottom-right-icon :size="16" /></el-button>
+        <el-button size="small" @click="moveByNumberUIOpen"><close-icon :size="16" /></el-button>
+      </el-button-group>
+    </div>
     <MLTIndexTab :app-activity="props.appActivity" />
 
     <el-main id="koma-list-wrapper" :style="{ 'font-size': fontSize + 'px', 'line-height': lineHeight() + 'px' }">
@@ -46,7 +74,8 @@
               </div>
             </div>
             <!-- class="aa-header" -->
-            <div v-html="koma.html" />
+            <div v-if="matchKomas[num] && visibleFindKomaUI" v-html="decorateFindKeyword(findKomaVal, koma.data)" />
+            <div v-else v-html="koma.html" />
           </div>
           <!-- class="aa" -->
         </div>
@@ -66,6 +95,10 @@ import { Ref, ref, nextTick, onMounted, watch, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import Sortable from 'sortablejs';
 
+import ArrowBottomRightIcon from 'vue-material-design-icons/ArrowBottomRight.vue';
+import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue';
+import ChevronDownIcon from 'vue-material-design-icons/ChevronDown.vue';
+import CloseIcon from 'vue-material-design-icons/Close.vue';
 import DragHorizontalVariantIcon from 'vue-material-design-icons/DragHorizontalVariant.vue';
 
 import MLTIndexTab from '@components/MLTIndex/MLTIndexTab.vue';
@@ -76,6 +109,8 @@ import { AppActivity, Item, ItemType, Koma, KomaList, ViewMode } from '@model/in
 import { ListManager } from '@/data/ListManager';
 import { userMLTSelectorDataStore, userMainIndexDataStore } from '@/data/config/StoreMLTIndex';
 import { userClipboadKoma } from '@/data/config/StoreClipboadKoma';
+import { String2x } from '@/char/String2x';
+import { focusUI } from '@/lib/focusUI';
 
 interface Props {
   appActivity: AppActivity;
@@ -145,6 +180,8 @@ async function updateList0() {
 }
 
 async function updateList() {
+  visibleMoveByNumberUI.value = false;
+  visibleFindKomaUI.value = false;
   console.log('updateList' + fileItem.value.name);
   if (fileItem.value.url == null || fileItem.value.url == '') return;
 
@@ -198,28 +235,27 @@ function checkInitialKomaFilie() {
   }
 }
 
-function jumpEdge(top: boolean) {
-  const num = top ? list.value.komas[0].id : list.value.komas[list.value.komas.length - 1].id;
-  jumpSection(num);
+function moveToEdge(top: boolean) {
+  const komaID = top ? list.value.komas[0].id : list.value.komas[list.value.komas.length - 1].id;
+  scrollToKoma(komaID);
 }
-function jumpSection(num: number) {
-  const dom = document.getElementById('koma-' + num);
+function moveToKoma(komaID: number) {
+  const dom = document.getElementById('koma-' + komaID);
   if (dom) {
     dom.scrollIntoView();
   }
 }
-
-function scrollKoma(num: number) {
+function scrollToKoma(komaID: number) {
   new Promise(() => {
     setTimeout(() => {
       nextTick(() => {
-        const dom = document.getElementById('koma-' + num);
+        const dom = document.getElementById('koma-' + komaID);
         if (!dom) return;
         const { top, bottom } = dom.getBoundingClientRect();
         if (top >= 0 && bottom <= window.innerHeight) return;
-        dom.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        dom.scrollIntoView({ behavior: 'auto', block: 'nearest' });
       });
-    }, 100);
+    }, 10);
   });
 }
 
@@ -294,7 +330,7 @@ function insertNewKoma(order_num: number) {
   const dic = { path: fileItem.value.url, orderNum: order_num, strKoma: JSON.stringify(koma) };
   const id = window.localDB.insertKoma(dic);
   updateList0();
-  scrollKoma(id);
+  scrollToKoma(id);
 }
 
 function pasteKoma(koma: Koma) {
@@ -308,7 +344,7 @@ function pasteKoma(koma: Koma) {
   };
   const id = window.localDB.pasteKoma(dic);
   updateList0();
-  scrollKoma(id);
+  scrollToKoma(id);
 }
 
 function sortKomas(id: number, oldOrderNum: number, newOrderNum: number) {
@@ -347,7 +383,7 @@ function updateViewKoma(koma: Koma) {
   new Promise(() => {
     setTimeout(() => {
       nextTick(() => {
-        scrollKoma(koma.id);
+        scrollToKoma(koma.id);
       });
     }, 300);
   });
@@ -378,6 +414,83 @@ function setSortable() {
   } else {
     console.log('koma-list not found');
   }
+}
+
+// moveByNumber
+const visibleMoveByNumberUI = ref(false);
+const moveByNumberVal = ref('');
+const moveByNumberInput = ref<InstanceType<typeof HTMLInputElement> | null>(null);
+
+function moveByNumber() {
+  const koma = list.value.komas[Number(moveByNumberVal.value) - 1];
+  if (koma) {
+    scrollToKoma(koma.id);
+  }
+}
+
+function moveByNumberUIOpen() {
+  moveByNumberVal.value = '';
+  visibleFindKomaUI.value = false;
+  visibleMoveByNumberUI.value = !visibleMoveByNumberUI.value;
+  focusUI(moveByNumberInput);
+}
+
+// findKoma
+const visibleFindKomaUI = ref(false);
+const findKomaVal = ref('');
+const findKomaInput = ref<InstanceType<typeof HTMLInputElement> | null>(null);
+const matchDecoration = ref(false); // 検索でマッチした文字列があり、その強調表示を有効にした状態
+const matchKomas: Ref<Array<boolean>> = ref([]); //検索でマッチした
+let currentMatchKomas: number[] = [];
+let currentMatchLocation = 0;
+
+function findKoma(on: boolean) {
+  matchKomas.value = [];
+  currentMatchKomas = [];
+  if (findKomaVal.value.length > 0) {
+    let i = 0;
+    list.value.komas.forEach((koma) => {
+      matchKomas.value[i] = koma.data.match(findKomaVal.value) != null;
+      if (matchKomas.value[i]) {
+        console.log('QQ match ID: ' + koma.id);
+        currentMatchKomas.push(koma.id);
+      }
+      i += 1;
+    });
+    matchDecoration.value = matchKomas.value.length > 0;
+  }
+  findLoop(on);
+}
+
+function findLoop(on: boolean) {
+  if (on) {
+    currentMatchLocation += 1;
+    if (currentMatchLocation > currentMatchKomas.length - 1) {
+      currentMatchLocation = 0;
+    }
+  } else {
+    currentMatchLocation -= 1;
+    if (currentMatchLocation < 0) {
+      currentMatchLocation = currentMatchKomas.length - 1;
+    }
+  }
+  if (currentMatchKomas[currentMatchLocation]) {
+    scrollToKoma(currentMatchKomas[currentMatchLocation]);
+  }
+}
+
+function findKomaUIOpen() {
+  visibleFindKomaUI.value = !visibleFindKomaUI.value;
+  visibleMoveByNumberUI.value = false;
+  focusUI(findKomaInput);
+}
+
+function findKomaUIClose() {
+  visibleFindKomaUI.value = false;
+}
+
+function decorateFindKeyword(keyword: string, htmldata: string): string {
+  return String2x.html2(htmldata).replaceAll(keyword, '<span class="match">' + keyword + '</span>');
 }
 </script>
 
@@ -490,5 +603,17 @@ main {
   width: 6px;
   border-radius: 2px;
   background: #909399;
+}
+
+.searchUI {
+  position: absolute;
+  top: 76px;
+  left: 380px;
+  margin-top: 4px;
+  padding: 4px;
+  background-color: #ccc;
+}
+.searchUI .el-input {
+  display: inline;
 }
 </style>

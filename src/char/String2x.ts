@@ -17,6 +17,14 @@ export class String2x {
       .replace(/\r\n|\n/g, '<br>');
   }
 
+  static html2(data: string): string {
+    const dat = data;
+    return dat
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\r\n|\n/g, '<br>');
+  }
+
   static numericChar(useUnicodeSpaceOnCopy: boolean, data: string) {
     if (useUnicodeSpaceOnCopy) {
       return data;

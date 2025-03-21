@@ -317,3 +317,8 @@ dt {
 dd {
   margin: 0.2rem 0 1rem 1rem;
 }
+span.match {
+  background-color: #fcfc00;
+  border: 1px solid #ccc;
+  color: #000;
+}

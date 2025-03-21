@@ -17,12 +17,14 @@ export interface MenuAPI {
   switchTabMode: () => void;
   selectTab: (isPrev: boolean) => void;
   switchListMode: () => void;
-  scrollToEdge: (toTop: boolean) => void;
+  moveToEdge: (toTop: boolean) => void;
+  moveByNumber: () => void;
   fontSize: (increase: boolean) => void;
   selectNav: (navType: NavType) => void;
   visibleButtons: () => void;
   visibleKomaPartsList: () => void;
 
+  findKoma: () => void;
   addKoma: () => void;
   addKomaPart_AA: () => void;
   addKomaPart_Editor: () => void;
@@ -47,8 +49,9 @@ export const menuAPI = {
   selectTab: (listener: (isPrev: boolean) => void) =>
     ipcRenderer.on('SelectTab', (_ev: IpcRendererEvent, isPrev: boolean) => listener(isPrev)),
   switchListMode: (callback) => ipcRenderer.on('SwitchListMode', callback),
-  scrollToEdge: (listener: (isPrev: boolean) => void) =>
-    ipcRenderer.on('ScrollToEdge', (_ev: IpcRendererEvent, toTop: boolean) => listener(toTop)),
+  moveToEdge: (listener: (isPrev: boolean) => void) =>
+    ipcRenderer.on('MoveToEdge', (_ev: IpcRendererEvent, toTop: boolean) => listener(toTop)),
+  moveByNumber: (callback) => ipcRenderer.on('MoveByNumber', callback),
   fontSize: (listener: (increase: boolean) => void) =>
     ipcRenderer.on('FontSize', (_ev: IpcRendererEvent, increase: boolean) => listener(increase)),
   selectNav: (listener: (navType: NavType) => void) =>
@@ -56,6 +59,7 @@ export const menuAPI = {
   visibleButtons: (callback) => ipcRenderer.on('VisibleButtons', callback),
   visibleKomaPartsList: (callback) => ipcRenderer.on('VisibleKomaPartsList', callback),
 
+  findKoma: (callback) => ipcRenderer.on('FindKoma', callback),
   addKoma: (callback) => ipcRenderer.on('AddKoma', callback),
   addKomaPart_AA: (callback) => ipcRenderer.on('AddKomaPart_AA', callback),
   addKomaPart_Editor: (callback) => ipcRenderer.on('AddKomaPart_Editor', callback),

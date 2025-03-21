@@ -103,6 +103,16 @@ export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[]
         { id: 'SelectAll', label: i18n.t('MENU.SelectAll'), role: 'selectAll' },
         { type: 'separator' },
         {
+          id: 'FindKoma',
+          label: i18n.t('MENU.FindKoma'),
+          accelerator: 'Ctrl+F',
+          // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
+          click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
+            browserWindow?.webContents.send('FindKoma');
+          }
+        },
+        { type: 'separator' },
+        {
           id: 'AddKoma',
           label: i18n.t('MENU.AddKoma'),
           accelerator: 'Ctrl+N',
@@ -219,19 +229,28 @@ export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[]
           }
         },
         {
-          id: 'ListUp',
-          label: i18n.t('MENU.ListUp'),
+          id: 'MoveToTop',
+          label: i18n.t('MENU.MoveToTop'),
           accelerator: 'Ctrl+Up',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
-            browserWindow?.webContents.send('ScrollToEdge', true);
+            browserWindow?.webContents.send('MoveToEdge', true);
           }
         },
         {
-          id: 'ListDown',
-          label: i18n.t('MENU.ListDown'),
+          id: 'MoveToBottom',
+          label: i18n.t('MENU.MoveToBottom'),
           accelerator: 'Ctrl+Down',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
-            browserWindow?.webContents.send('ScrollToEdge', false);
+            browserWindow?.webContents.send('MoveToEdge', false);
+          }
+        },
+        {
+          id: 'MoveByNumber',
+          label: i18n.t('MENU.MoveByNumber'),
+          accelerator: 'Ctrl+G',
+          // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
+          click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
+            browserWindow?.webContents.send('MoveByNumber');
           }
         },
         { type: 'separator' },

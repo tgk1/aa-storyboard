@@ -34,8 +34,10 @@ export function enableMenu(act: AppActivity) {
     SelectPrevTab: false,
     SelectTabNext: false,
     SwitchListMode: false,
-    ListUp: false,
-    ListDown: false,
+    MoveToTop: false,
+    MoveToBottom: false,
+    MoveByNumber: true,
+    FindKoma: true,
     FontSizeUp: false,
     FontSizeDown: false,
     VisibleButtons: false,
@@ -71,8 +73,10 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectPrevTab'] = true;
       menuIDs['SelectNextTab'] = true;
       menuIDs['SwitchListMode'] = true;
-      menuIDs['ListUp'] = true;
-      menuIDs['ListDown'] = true;
+      menuIDs['FindKoma'] = true;
+      menuIDs['MoveToTop'] = true;
+      menuIDs['MoveToBottom'] = true;
+      menuIDs['MoveByNumber'] = true;
       menuIDs['FontSizeUp'] = true;
       menuIDs['FontSizeDown'] = true;
       menuIDs['VisibleButtons'] = false;
@@ -106,8 +110,10 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectPrevTab'] = true;
       menuIDs['SelectNextTab'] = true;
       menuIDs['SwitchListMode'] = true;
-      menuIDs['ListUp'] = true;
-      menuIDs['ListDown'] = true;
+      menuIDs['FindKoma'] = true;
+      menuIDs['MoveToTop'] = true;
+      menuIDs['MoveToBottom'] = true;
+      menuIDs['MoveByNumber'] = true;
       menuIDs['FontSizeUp'] = true;
       menuIDs['FontSizeDown'] = true;
       menuIDs['VisibleButtons'] = false;
@@ -138,8 +144,10 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectPrevTab'] = false;
       menuIDs['SelectNextTab'] = false;
       menuIDs['SwitchListMode'] = false;
-      menuIDs['ListUp'] = false;
-      menuIDs['ListDown'] = false;
+      menuIDs['FindKoma'] = false;
+      menuIDs['MoveToTop'] = false;
+      menuIDs['MoveToBottom'] = false;
+      menuIDs['MoveByNumber'] = false;
       menuIDs['FontSizeUp'] = true;
       menuIDs['FontSizeDown'] = true;
       menuIDs['VisibleButtons'] = true;
@@ -170,8 +178,10 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectPrevTab'] = false;
       menuIDs['SelectNextTab'] = false;
       menuIDs['SwitchListMode'] = false;
-      menuIDs['ListUp'] = false;
-      menuIDs['ListDown'] = false;
+      menuIDs['FindKoma'] = false;
+      menuIDs['MoveToTop'] = false;
+      menuIDs['MoveToBottom'] = false;
+      menuIDs['MoveByNumber'] = false;
       menuIDs['FontSizeUp'] = true;
       menuIDs['FontSizeDown'] = true;
       menuIDs['VisibleButtons'] = false;
