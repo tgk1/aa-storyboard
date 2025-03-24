@@ -194,6 +194,28 @@ export class LocalMLTClient {
     return dat;
   }
 
+  public dat(item: Item): KomaList {
+    const buffer = fs.readFileSync(item.url);
+    const text = String2x.decode(buffer, 'Windows-31j');
+    return String2x.dat2komaList(text, item);
+  }
+
+  public shitarabaDat(item: Item): KomaList {
+    const buffer = fs.readFileSync(item.url);
+    const text = String2x.decode(buffer, 'EUCJP');
+    return String2x.shitarabaDat2komaList(text, item);
+  }
+
+  public shitarabaHtml(item: Item): KomaList {
+    const buffer = fs.readFileSync(item.url);
+    const text = String2x.decode(buffer, 'EUCJP');
+    if (text.match(/initial-scale/)) {
+      return String2x.shitarabaHtmlTypeB2komaList(text, item);
+    } else {
+      return String2x.shitarabaHtmlTypeA2komaList(text, item);
+    }
+  }
+
   public aalisttxt2(): string {
     const path = AppConfig.getAAListTxtPath();
     if (fs.existsSync(path)) {

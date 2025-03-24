@@ -15,3 +15,4 @@ export * from './NavType';
 export * from './TabMode';
 export { Theme } from './Theme';
 export * from './ViewMode';
+export * from './FindMode';

@@ -1,7 +1,9 @@
 import { Item } from '@model/Item';
 import { KomaList, YBBSFile } from '@model/Koma';
 import { AAListTxt } from '@model/AAListTxt';
-import { mlt2KomaList, ast2KomaList } from '@/char/str2k/Str2KomaList';
+import { mlt2KomaList, ast2KomaList, dat2KomaList } from '@/char/str2k/Str2KomaList';
+import { shitarabaDat2KomaList } from '@/char/str2k/Str2KomaList';
+import { shitarabaHtmlTypeA2KomaList, shitarabaHtmlTypeB2KomaList } from '@/char/str2k/Str2KomaList';
 import { mlt2ybbsFile } from '@/char/str2k/Str2YbbsFile';
 import { txt2aalisttxt } from '@/char/str2str/Str2aalisttxt';
 import * as iconv from 'iconv-lite';
@@ -49,7 +51,7 @@ export class String2x {
     const data2 = he.decode(data1);
     return data2;
   }
-  static htmldecode(buffer: string,) {
+  static htmldecode(buffer: string) {
     return he.decode(buffer);
   }
 
@@ -70,6 +72,22 @@ export class String2x {
 
   static ast2komaList(data: string, item: Item): KomaList {
     return ast2KomaList(data, item);
+  }
+
+  static dat2komaList(data: string, item: Item): KomaList {
+    return dat2KomaList(data, item);
+  }
+
+  static shitarabaDat2komaList(data: string, item: Item): KomaList {
+    return shitarabaDat2KomaList(data, item);
+  }
+
+  static shitarabaHtmlTypeA2komaList(data: string, item: Item): KomaList {
+    return shitarabaHtmlTypeA2KomaList(data, item);
+  }
+
+  static shitarabaHtmlTypeB2komaList(data: string, item: Item): KomaList {
+    return shitarabaHtmlTypeB2KomaList(data, item);
   }
 
   static ybbsFile(data: string): YBBSFile {

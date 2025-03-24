@@ -58,6 +58,7 @@ function bootstrap() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
+    mainWindow.webContents.openDevTools(); // DEBUG
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

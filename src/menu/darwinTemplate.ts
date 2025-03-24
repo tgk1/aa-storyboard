@@ -48,13 +48,18 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
               defaultPath: AppConfig.get().PathLocalFolderDB,
               properties: ['openFile'],
               filters: [
-                { name: 'text', extensions: ['ast', 'mlt', 'txt', 'ybbs'] },
+                { name: 'AST/MLT/YBBS', extensions: ['ast', 'mlt', 'ybbs'] },
+                { name: 'ぜろちゃんねるdat(*.dat)', extensions: ['dat'] },
+                { name: 'したらばdat(*.raw)', extensions: ['raw'] },
+                { name: 'したらば過去ログ(*.html)', extensions: ['html'] },
                 { name: 'All Files', extensions: ['*'] }
               ]
             });
             if (filePath == undefined) return;
             const result = FileConverter.import(String(filePath));
-            const message = result ? i18n.t('MENU.ImportSucceeded') : i18n.t('MENU.ImportFailed');
+            const message = result
+              ? i18n.t('MENU.ImportSucceeded') + '\n' + AppConfig.get().PathLocalFolderDB
+              : i18n.t('MENU.ImportFailed');
             dialog.showMessageBox({ type: 'info', message: message });
             browserWindow?.webContents.send('reload-list', 'imported');
           }

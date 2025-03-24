@@ -39,11 +39,21 @@ export class FileConverter {
       } else if (filePath.match(/ast$/i)) {
         const komaList = client.ast(item);
         this.komaList2db(dbPath, komaList);
+      } else if (filePath.match(/dat$/i)) {
+        const komaList = client.dat(item);
+        this.komaList2db(dbPath, komaList);
+      } else if (filePath.match(/raw$/i)) {
+        const komaList = client.shitarabaDat(item);
+        this.komaList2db(dbPath, komaList);
+      } else if (filePath.match(/html$/i)) {
+        const komaList = client.shitarabaHtml(item);
+        this.komaList2db(dbPath, komaList);
       } else {
         const komaList = client.mlt(item);
         this.komaList2db(dbPath, komaList);
       }
-    } catch {
+    } catch (e) {
+      console.log(e);
       return false;
     }
 
@@ -88,7 +98,7 @@ export class FileConverter {
     fs.writeFileSync(mltFilePath, '');
     const fd = fs.openSync(mltFilePath, 'w');
     try {
-      fs.writeSync(fd, mlt);
+      fs.writeSync(fd, mlt); //BufferでOK
       fs.closeSync(fd);
     } catch {
       return false;
