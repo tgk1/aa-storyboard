@@ -60,6 +60,7 @@ export const menuAPI = {
   visibleKomaPartsList: (callback) => ipcRenderer.on('VisibleKomaPartsList', callback),
 
   findKoma: (callback) => ipcRenderer.on('FindKoma', callback),
+  replaceKoma: (callback) => ipcRenderer.on('ReplaceKoma', callback),
   addKoma: (callback) => ipcRenderer.on('AddKoma', callback),
   addKomaPart_AA: (callback) => ipcRenderer.on('AddKomaPart_AA', callback),
   addKomaPart_Editor: (callback) => ipcRenderer.on('AddKomaPart_Editor', callback),

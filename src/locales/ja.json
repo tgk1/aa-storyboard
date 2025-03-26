@@ -68,6 +68,9 @@
     "CloseOtherTabs": "表示しているタブ以外を閉じる",
     "SortByName": "名前順でソート",
 
+    "FindKoma": "検索",
+    "ReplaceKoma": "置換",
+    "ReplaceAllKoma": "一括置換",
     "CopyKoma": "コピー",
     "CopyImageKoma": "画像としてコピー",
     "Copied": "クリップボードにコピーしました。",
@@ -239,6 +242,7 @@
     "SelectAll": "全て選択",
 
     "FindKoma": "検索",
+    "ReplaceKoma": "置換",
     "AddKoma": "コマ作成",
     "AddKomaPart_AA": "AA追加",
     "AddKomaPart_Editor": "空枠追加",

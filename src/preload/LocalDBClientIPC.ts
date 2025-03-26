@@ -46,6 +46,9 @@ export interface LocalDBClientAPI {
 
   replicaKoma:             (dic: { path: string; strKoma: string; strKomaParts: string }) => void;
   createFile:              (dic: { dirName: string; fileName: string }) => string;
+
+  replaceString:           (dic: { path: string; komaID: number, keyword: string, replace: string }) => void;
+  replaceAllString:        (dic: { path: string; keyword: string, replace: string }) => void;
 }
 declare global {
   interface Window {
@@ -84,7 +87,10 @@ export const localDBClientAPI = {
   setKomaAndKomaParts:  (dic: { path: string; strKoma: string, strKomaParts: string }) => ipcRenderer.send('setKomaAndKomaParts_LocalDB', dic),
 
   replicaKoma:          (dic: { path: string; strKoma: string; strKomaParts: string }) => ipcRenderer.send('replicaKoma_LocalDB', dic),
-  createFile:           (dic: { dirName: string; fileName: string })  => ipcRenderer.sendSync('createFile_LocalDB', dic)
+  createFile:           (dic: { dirName: string; fileName: string })  => ipcRenderer.sendSync('createFile_LocalDB', dic),
+
+  replaceString:        (dic: { path: string; komaID: number; keyword: string; replace: string })  => ipcRenderer.sendSync('replaceString_LocalDB', dic),
+  replaceAllString:     (dic: { path: string; keyword: string; replace: string })  => ipcRenderer.sendSync('replaceAllString_LocalDB', dic)
 };
 
 export function localDBClientIPC() {
@@ -268,4 +274,20 @@ export function localDBClientIPC() {
     const fileName = arg['fileName'];
     event.returnValue = LocalDBClient.createFile(dirName, fileName);
   });
+/*
+  ipcMain.on('replaceString_LocalDB', (event, arg) => {
+    const ldb = new LocalDBClient(arg['path']);
+    const id = arg['komaID'];
+    const keyword = arg['keyword'];
+    const replace = arg['replace'];
+    event.returnValue = ldb.replaceString(id, keyword, replace);
+  });
+
+  ipcMain.on('replaceAllString_LocalDB', (event, arg) => {
+    const ldb = new LocalDBClient(arg['path']);
+    const keyword = arg['keyword'];
+    const replace = arg['replace'];
+    event.returnValue = ldb.replaceAllString(keyword, replace);
+  });
+*/
 }

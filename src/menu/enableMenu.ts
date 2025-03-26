@@ -38,6 +38,7 @@ export function enableMenu(act: AppActivity) {
     MoveToBottom: false,
     MoveByNumber: true,
     FindKoma: true,
+    ReplaceKoma: true,
     FontSizeUp: false,
     FontSizeDown: false,
     VisibleButtons: false,
@@ -74,6 +75,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectNextTab'] = true;
       menuIDs['SwitchListMode'] = true;
       menuIDs['FindKoma'] = true;
+      menuIDs['ReplaceKoma'] = true;
       menuIDs['MoveToTop'] = true;
       menuIDs['MoveToBottom'] = true;
       menuIDs['MoveByNumber'] = true;
@@ -111,6 +113,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectNextTab'] = true;
       menuIDs['SwitchListMode'] = true;
       menuIDs['FindKoma'] = true;
+      menuIDs['ReplaceKoma'] = false;
       menuIDs['MoveToTop'] = true;
       menuIDs['MoveToBottom'] = true;
       menuIDs['MoveByNumber'] = true;
@@ -145,6 +148,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectNextTab'] = false;
       menuIDs['SwitchListMode'] = false;
       menuIDs['FindKoma'] = false;
+      menuIDs['ReplaceKoma'] = false;
       menuIDs['MoveToTop'] = false;
       menuIDs['MoveToBottom'] = false;
       menuIDs['MoveByNumber'] = false;
@@ -179,6 +183,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SelectNextTab'] = false;
       menuIDs['SwitchListMode'] = false;
       menuIDs['FindKoma'] = false;
+      menuIDs['ReplaceKoma'] = false;
       menuIDs['MoveToTop'] = false;
       menuIDs['MoveToBottom'] = false;
       menuIDs['MoveByNumber'] = false;

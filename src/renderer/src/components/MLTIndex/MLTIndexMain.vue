@@ -2,10 +2,12 @@
   <div id="file-view-main">
     <MLTIndexToolbar
       :app-activity="props.appActivity"
+      :item="fileItem"
       :sections="list.sections"
       :enable-trash-button="enableTrashButton"
       @add-koma="insertNewKomaAndEdit"
       @find-koma="findbar(FindMode.Find)"
+      @replace-koma="findbar(FindMode.Replace)"
       @move-to-edge="moveToEdge"
       @move-to-koma="moveToKoma"
       @move-by-number="findbar(FindMode.MoveByNumber)"
@@ -16,7 +18,8 @@
       :find-mode="findMode"
       @move-by-number="moveByNumber"
       @find-koma="findKoma"
-      @find-loop="findLoop"
+      @replace-koma="replaceKoma"
+      @replace-all-koma="replaceAllKoma"
       @close="findbar(FindMode.Default)"
     />
     <MLTIndexTab :app-activity="props.appActivity" />
@@ -55,9 +58,9 @@
             </div>
             <!-- class="aa-header" -->
             <div
-              v-if="matchKomas[num] && findMode == FindMode.Find && findKomaVal.length > 0"
+              v-if="findMode != FindMode.Default && checkFindKoma(findKomaVal, koma)"
               class="aakoma"
-              v-html="decorateFindKeyword(findKomaVal, koma.data)"
+              v-html="decorateFindKeyword(koma.data)"
             />
             <div v-else class="aakoma" v-html="koma.html" />
           </div>
@@ -71,6 +74,7 @@
         </div>
       </div>
     </el-main>
+    <span id="merge-core-for-calc" ref="mergeCoreElm" />
   </div>
 </template>
 
@@ -86,10 +90,12 @@ import KomaToolbar from '@components/MLTIndex/KomaToolbar.vue';
 import MLTIndexToolbar from '@components/MLTIndex/MLTIndexToolbar.vue';
 import MLTIndexFindbar from '@components/MLTIndex/MLTIndexFindbar.vue';
 
-import { AppActivity, Item, ItemType, Koma, KomaList, ViewMode, FindMode } from '@model/index';
+import { AppActivity, Item, ItemType, Koma, KomaList, ViewMode, FindMode, KomaPart } from '@model/index';
 import { ListManager } from '@/data/ListManager';
+import { KomaPartsClient } from '@/data/KomaPartsClient';
 import { userMLTSelectorDataStore, userMainIndexDataStore } from '@/data/config/StoreMLTIndex';
 import { userClipboadKoma } from '@/data/config/StoreClipboadKoma';
+import { userAACanvasDataStore } from '@/data/config/StoreAACanvas';
 import { String2x } from '@/char/String2x';
 
 interface Props {
@@ -100,6 +106,7 @@ const props = defineProps<Props>();
 const store = props.appActivity == AppActivity.MainIndex ? userMainIndexDataStore() : userMLTSelectorDataStore();
 const { fileItem, fontSize, viewMode, tabMode, visiblePopInitialStartupKoma } = storeToRefs(store);
 const { lineHeight, getTabItem } = store;
+const { configAddLineBreakAtTop, configAddLineBreakAtBottom } = storeToRefs(userAACanvasDataStore());
 
 const storeClipboad = userClipboadKoma();
 const { clipboadKoma, clipboadKomaParts } = storeToRefs(storeClipboad);
@@ -160,8 +167,8 @@ async function updateList0() {
 }
 
 async function updateList() {
-  //visibleMoveByNumberUI.value = false;
-  //visibleFindKomaUI.value = false;
+  findMode.value = FindMode.Default;
+
   console.log('updateList' + fileItem.value.name);
   if (fileItem.value.url == null || fileItem.value.url == '') return;
 
@@ -400,6 +407,11 @@ function setSortable() {
 const findMode = ref(FindMode.Default);
 function findbar(mode: FindMode) {
   findMode.value = findMode.value == mode ? FindMode.Default : mode;
+  if (mode == FindMode.Default || findKomaVal.value.length == 0) {
+    matchKomas.value = [];
+    currentMatchKomas = [];
+    currentMatchLocation = 0;
+  }
 }
 function moveByNumber(num: number) {
   const koma = list.value.komas[num - 1];
@@ -408,40 +420,17 @@ function moveByNumber(num: number) {
   }
 }
 
-// findKoma
+//
+// findKoma + replaceKoma
 const findKomaVal = ref('');
-const matchDecoration = ref(false); // 検索でマッチした文字列があり、その強調表示を有効にした状態
+const replaceKomaVal = ref('');
 const matchKomas: Ref<Array<boolean>> = ref([]); //検索でマッチした
 let currentMatchKomas: number[] = [];
 let currentMatchLocation = 0;
+let currentReplaceLocation = 0;
 
-function findKoma(keyword: string) {
-  findKomaVal.value = keyword;
-
-  if (findKomaVal.value.length == 0) {
-    matchKomas.value = [];
-    currentMatchKomas = [];
-    matchDecoration.value = false;
-    return;
-  }
-
-  if (findKomaVal.value == keyword && matchDecoration.value) {
-    findLoop(true);
-    return;
-  }
-
-  matchKomas.value = [];
-  currentMatchKomas = [];
-  let i = 0;
-  list.value.komas.forEach((koma) => {
-    matchKomas.value[i] = koma.data.match(keyword) != null;
-    if (matchKomas.value[i]) {
-      currentMatchKomas.push(koma.id);
-    }
-    i += 1;
-  });
-  matchDecoration.value = matchKomas.value.length > 0;
-  findLoop(true);
+function decorateFindKeyword(htmldata: string): string {
+  return String2x.html2(htmldata).replaceAll(findKomaVal.value, '<span class="match">' + findKomaVal.value + '</span>');
 }
 
 function findLoop(on: boolean) {
@@ -459,10 +448,98 @@ function findLoop(on: boolean) {
   if (currentMatchKomas[currentMatchLocation]) {
     scrollToKoma(currentMatchKomas[currentMatchLocation]);
   }
+  //console.log('findLoop: ' + currentMatchKomas[currentMatchLocation]);
 }
 
-function decorateFindKeyword(keyword: string, htmldata: string): string {
-  return String2x.html2(htmldata).replaceAll(keyword, '<span class="match">' + keyword + '</span>');
+// findKoma
+function findKoma(keyword: string, forward: boolean) {
+  const reset = findKomaVal.value != keyword;
+  findKomaVal.value = keyword;
+
+  if (keyword.length == 0 || reset) {
+    matchKomas.value = [];
+    currentMatchKomas = [];
+  }
+  if (keyword.length == 0) {
+    return;
+  }
+
+  if (reset) {
+    let i = 0;
+    list.value.komas.forEach((koma) => {
+      matchKomas.value[i] = koma.data.match(keyword) != null;
+      if (matchKomas.value[i]) {
+        currentMatchKomas.push(koma.id);
+      }
+      i += 1;
+    });
+  }
+
+  findLoop(forward);
+}
+
+function checkFindKoma(keyword: string, koma: Koma): boolean {
+  if (keyword.length == 0) return false;
+  return koma.data.match(keyword) != null;
+}
+
+// replaceKoma
+function replaceKoma(keyword: string, replace: string) {
+  replaceKomaVal.value = replace;
+  if (currentReplaceLocation != currentMatchLocation) {
+    findKoma(keyword, true);
+    currentReplaceLocation = currentMatchLocation;
+  } else {
+    if (currentMatchKomas[currentMatchLocation]) {
+      for (const koma of list.value.komas) {
+        if (koma.id == currentMatchKomas[currentMatchLocation]) {
+          replaceString(koma, keyword, replace);
+        }
+      }
+    }
+    currentReplaceLocation += 0.5;
+  }
+}
+function replaceAllKoma(keyword: string, replace: string) {
+  console.log('replaceAllKoma');
+  replaceKomaVal.value = replace;
+  findKoma(keyword, true);
+  for (let i = 0; i < list.value.komas.length; i++) {
+    if (matchKomas.value[i]) {
+      replaceString(list.value.komas[i], keyword, replace);
+    }
+  }
+}
+
+import { mergeKomaParts, addLineBreaks } from '@/renderer/src/components/libchar/merge';
+const mergeCoreElm = ref<InstanceType<typeof HTMLSpanElement> | null>(null);
+
+function replaceString(koma: Koma, keyword: string, replace: string) {
+  console.log('replaceString: ' + koma.id);
+  const kpClient = new KomaPartsClient(fileItem.value.url, koma.id);
+  const promise: Promise<Array<KomaPart>> = kpClient.getKomaParts();
+  promise.then((response) => {
+    const kparts = response;
+    for (const kpart of kparts) {
+      if (!kpart.data.match(keyword)) {
+        continue;
+      }
+      kpart.data = kpart.data.replace(keyword, replace);
+      kpart.html = String2x.html(kpart.data);
+      window.localDB.setKomaPart({
+        path: fileItem.value.url,
+        strKomaPart: JSON.stringify(kpart)
+      });
+    }
+
+    const data = mergeKomaParts(mergeCoreElm, kparts).data;
+    koma.data = addLineBreaks(configAddLineBreakAtTop.value, configAddLineBreakAtBottom.value, data);
+    koma.html = String2x.html(koma.data);
+    window.localDB.setKoma({
+      path: fileItem.value.url,
+      strKoma: JSON.stringify(koma)
+    });
+  });
 }
 </script>
 

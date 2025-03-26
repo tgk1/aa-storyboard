@@ -317,6 +317,23 @@ dt {
 dd {
   margin: 0.2rem 0 1rem 1rem;
 }
+
+
+#merge-core-for-calc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -199;
+
+  font-family: 'Saitamaar';
+  white-space: pre;
+  font-weight: normal;
+  color: #000;
+  background-color: #ffffff;
+  font-size: 16px;
+  line-height: 18px;
+}
+
 span.match {
   background-color: #fcfc00;
   border: 1px solid #ccc;

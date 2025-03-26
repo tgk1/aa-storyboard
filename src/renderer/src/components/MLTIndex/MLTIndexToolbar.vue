@@ -34,6 +34,9 @@
         <el-button size="small" :tabindex="-1" @click="$emit('find-koma')">
           <magnify-icon :size="16" />
         </el-button>
+        <el-button v-if="props.item.type == ItemType.LocalDB" size="small" :tabindex="-1" @click="$emit('replace-koma')">
+          <find-replace-icon :size="16" />
+        </el-button>
       </el-button-group>
 
       <el-button-group class="ui-padding">
@@ -48,7 +51,7 @@
         </el-button>
       </el-button-group>
 
-      <div class="sel-ui">
+      <div class="sel-ui ui-padding">
         <el-select size="small" :placeholder="$t('IDX-R.MoveBySection')" @change="moveBySection">
           <el-option v-for="sec in props.sections" :key="sec.id" :label="sec.name" :value="sec.id" />
         </el-select>
@@ -77,19 +80,21 @@ import PlusBoxIcon from 'vue-material-design-icons/PlusBox.vue';
 import ViewSequentialOutlineIcon from 'vue-material-design-icons/ViewSequentialOutline.vue';
 import ViewModuleOutlineIcon from 'vue-material-design-icons/ViewModuleOutline.vue';
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
+import FindReplaceIcon from 'vue-material-design-icons/FindReplace.vue';
 import ArrowCollapseDownIcon from 'vue-material-design-icons/ArrowCollapseDown.vue';
 import ArrowCollapseUpIcon from 'vue-material-design-icons/ArrowCollapseUp.vue';
 import ArrowBottomRightIcon from 'vue-material-design-icons/ArrowBottomRight.vue';
 import UndoIcon from 'vue-material-design-icons/Undo.vue';
 import DeleteForeverOutlineIcon from 'vue-material-design-icons/DeleteForeverOutline.vue';
 
-import { AppActivity, ItemType, ViewMode, Section } from '@model/index';
+import { AppActivity, Item, ItemType, ViewMode, Section } from '@model/index';
 import { userMLTSelectorDataStore, userMainIndexDataStore } from '@/data/config/StoreMLTIndex';
 
 import InitialStartupPopKoma from './InitialStartupPopKoma.vue';
 
 interface Props {
   appActivity: AppActivity;
+  item: Item;
   sections: Section[];
   enableTrashButton: boolean;
 }
@@ -105,6 +110,7 @@ interface Emits {
   (e: 'move-by-number'): void;
   (e: 'move-to-koma', section: number): void;
   (e: 'find-koma'): void;
+  (e: 'replace-koma'): void;
   (e: 'add-koma'): void;
   (e: 'undo-trash'): void;
   (e: 'empty-trash'): void;
@@ -135,6 +141,11 @@ onMounted(() => {
   });
   window.menu.findKoma(() => {
     emits('find-koma');
+  });
+  window.menu.replaceKoma(() => {
+    if (props.item.type == ItemType.LocalDB) {
+      emits('replace-koma');
+    }
   });
   window.menu.addKoma(() => {
     emits('add-koma');

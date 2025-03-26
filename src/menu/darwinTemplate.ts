@@ -49,9 +49,9 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
               properties: ['openFile'],
               filters: [
                 { name: 'AST/MLT/YBBS', extensions: ['ast', 'mlt', 'ybbs'] },
-                { name: 'ぜろちゃんねるdat(*.dat)', extensions: ['dat'] },
-                { name: 'したらばdat(*.raw)', extensions: ['raw'] },
-                { name: 'したらば過去ログ(*.html)', extensions: ['html'] },
+                { name: 'ぜろちゃんねる/Yaruyomi DAT', extensions: ['dat'] },
+                { name: 'したらば DAT(*.raw)', extensions: ['raw'] },
+                { name: 'したらば 過去ログ(*.html)', extensions: ['html'] },
                 { name: 'All Files', extensions: ['*'] }
               ]
             });
@@ -135,6 +135,15 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
           // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('FindKoma');
+          }
+        },
+        {
+          id: 'ReplaceKoma',
+          label: i18n.t('MENU.ReplaceKoma'),
+          accelerator: 'Command+Shift+F',
+          // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
+          click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
+            browserWindow?.webContents.send('ReplaceKoma');
           }
         },
         { type: 'separator' },

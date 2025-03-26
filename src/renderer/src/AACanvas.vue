@@ -91,9 +91,10 @@ const { selectedKomaPartsID, clipboadKomaParts } = storeToRefs(storeClipboad);
 const { selectToClipboad, getSelectedKomaParts } = storeClipboad;
 
 import { Koma, KomaPart } from '@model/index';
-import { MergeCore } from '@/char/MergeCore';
+//import { MergeCore } from '@/char/MergeCore';
 import { String2x } from '@/char/String2x';
 import { KomaPartsClient } from '@/data/KomaPartsClient';
+import { mergeKomaParts, addLineBreaks } from './components/libchar/merge';
 
 const visibleAALayerList = ref(true);
 const aaCanvasMain = ref<InstanceType<typeof AACanvasMain> | null>(null);
@@ -271,8 +272,8 @@ function closeEditor() {
 }
 
 function saveData() {
-  const data = mergeKomaParts(komaParts.value).data;
-  koma.value.data = addLineBreaks(data);
+  const data = mergeKomaParts(mergeCoreElm, komaParts.value).data;
+  koma.value.data = addLineBreaks(configAddLineBreakAtTop.value, configAddLineBreakAtBottom.value, data);
   koma.value.html = String2x.html(koma.value.data);
   window.localDB.setKoma({
     path: filePath.value,
@@ -292,21 +293,10 @@ function close() {
 //
 // Merge KomaParts
 //
-function mergeKomaParts(kparts: KomaPart[]): KomaPart {
-  if (kparts.length == 0) {
-    return new KomaPart();
-  }
-  const mc = new MergeCore(mergeCoreElm.value, 16);
-  const newkpart = mc.mergeKomaPartsArray(kparts);
-
-  if (!newkpart) throw 'merge error2';
-  return newkpart;
-}
-
 function mergeKomaParts_UpdateList() {
   let mergedKPart: KomaPart;
   try {
-    mergedKPart = mergeKomaParts(komaParts.value);
+    mergedKPart = mergeKomaParts(mergeCoreElm, komaParts.value);
     koma.value.data = mergedKPart.data;
     koma.value.html = String2x.html(mergedKPart.data);
   } catch {
@@ -315,12 +305,6 @@ function mergeKomaParts_UpdateList() {
   kpClient.mergeKomaParts(koma.value, mergedKPart);
   updateList();
   saveData();
-}
-
-function addLineBreaks(text: string): string {
-  text = String2x.addLineBreaksAtTop(configAddLineBreakAtTop.value, text);
-  text = String2x.addLineBreaksAtBottom(configAddLineBreakAtBottom.value, text);
-  return text;
 }
 
 //
@@ -335,7 +319,7 @@ function komaPart2Clipboad() {
   const koma = new Koma();
   let mergedKPart: KomaPart;
   try {
-    mergedKPart = mergeKomaParts(kparts);
+    mergedKPart = mergeKomaParts(mergeCoreElm, kparts);
     koma.data = mergedKPart.data;
   } catch {
     console.log('error');
@@ -422,19 +406,5 @@ function setMergeLayerMode(mlMode: number) {
 }
 #etc-info {
   margin: 4px 2px 2px 20px;
-}
-#merge-core-for-calc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -199;
-
-  font-family: 'Saitamaar';
-  white-space: pre;
-  font-weight: normal;
-  color: #000;
-  background-color: #ffffff;
-  font-size: 16px;
-  line-height: 18px;
 }
 </style>
