@@ -125,6 +125,13 @@ export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[]
             browserWindow?.webContents.send('ReplaceKoma');
           }
         },
+        {
+          id: 'BulkDeleteKoma',
+          label: i18n.t('MENU.BulkDeleteKoma'),
+          click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
+            browserWindow?.webContents.send('BulkDeleteKoma');
+          }
+        },
         { type: 'separator' },
         {
           id: 'AddKoma',
@@ -390,6 +397,20 @@ export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[]
           label: i18n.t('MENU.Usage'),
           click: async () => {
             await shell.openExternal('https://rss.r401.net/mlt/usage.html');
+          }
+        },
+        {
+          id: 'Usage_Merge',
+          label: i18n.t('MENU.Usage_Merge'),
+          click: async () => {
+            await shell.openExternal('https://rss.r401.net/mlt/usage_merge.html');
+          }
+        },
+        {
+          id: 'Usage_ImportDAT',
+          label: i18n.t('MENU.Usage_ImportDAT'),
+          click: async () => {
+            await shell.openExternal('https://rss.r401.net/mlt/usage_import_dat.html');
           }
         }
       ]

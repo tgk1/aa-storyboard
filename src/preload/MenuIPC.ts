@@ -25,6 +25,8 @@ export interface MenuAPI {
   visibleKomaPartsList: () => void;
 
   findKoma: () => void;
+  replaceKoma: () => void;
+  bulkDeleteKoma: () => void;
   addKoma: () => void;
   addKomaPart_AA: () => void;
   addKomaPart_Editor: () => void;
@@ -61,6 +63,7 @@ export const menuAPI = {
 
   findKoma: (callback) => ipcRenderer.on('FindKoma', callback),
   replaceKoma: (callback) => ipcRenderer.on('ReplaceKoma', callback),
+  bulkDeleteKoma: (callback) => ipcRenderer.on('BulkDeleteKoma', callback),
   addKoma: (callback) => ipcRenderer.on('AddKoma', callback),
   addKomaPart_AA: (callback) => ipcRenderer.on('AddKomaPart_AA', callback),
   addKomaPart_Editor: (callback) => ipcRenderer.on('AddKomaPart_Editor', callback),

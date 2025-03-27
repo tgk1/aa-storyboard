@@ -76,6 +76,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SwitchListMode'] = true;
       menuIDs['FindKoma'] = true;
       menuIDs['ReplaceKoma'] = true;
+      menuIDs['BulkDeleteKoma'] = true;
       menuIDs['MoveToTop'] = true;
       menuIDs['MoveToBottom'] = true;
       menuIDs['MoveByNumber'] = true;
@@ -114,6 +115,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SwitchListMode'] = true;
       menuIDs['FindKoma'] = true;
       menuIDs['ReplaceKoma'] = false;
+      menuIDs['BulkDeleteKoma'] = false;
       menuIDs['MoveToTop'] = true;
       menuIDs['MoveToBottom'] = true;
       menuIDs['MoveByNumber'] = true;
@@ -149,6 +151,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SwitchListMode'] = false;
       menuIDs['FindKoma'] = false;
       menuIDs['ReplaceKoma'] = false;
+      menuIDs['BulkDeleteKoma'] = false;
       menuIDs['MoveToTop'] = false;
       menuIDs['MoveToBottom'] = false;
       menuIDs['MoveByNumber'] = false;
@@ -184,6 +187,7 @@ export function enableMenu(act: AppActivity) {
       menuIDs['SwitchListMode'] = false;
       menuIDs['FindKoma'] = false;
       menuIDs['ReplaceKoma'] = false;
+      menuIDs['BulkDeleteKoma'] = false;
       menuIDs['MoveToTop'] = false;
       menuIDs['MoveToBottom'] = false;
       menuIDs['MoveByNumber'] = false;

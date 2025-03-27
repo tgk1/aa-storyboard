@@ -37,6 +37,9 @@
         <el-button v-if="props.item.type == ItemType.LocalDB" size="small" :tabindex="-1" @click="$emit('replace-koma')">
           <find-replace-icon :size="16" />
         </el-button>
+        <el-button v-if="props.item.type == ItemType.LocalDB" size="small" :tabindex="-1" @click="$emit('bulk-delete-koma')">
+          <playlist-remove-icon :size="16" />
+        </el-button>
       </el-button-group>
 
       <el-button-group class="ui-padding">
@@ -81,6 +84,7 @@ import ViewSequentialOutlineIcon from 'vue-material-design-icons/ViewSequentialO
 import ViewModuleOutlineIcon from 'vue-material-design-icons/ViewModuleOutline.vue';
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
 import FindReplaceIcon from 'vue-material-design-icons/FindReplace.vue';
+import PlaylistRemoveIcon from 'vue-material-design-icons/PlaylistRemove.vue';
 import ArrowCollapseDownIcon from 'vue-material-design-icons/ArrowCollapseDown.vue';
 import ArrowCollapseUpIcon from 'vue-material-design-icons/ArrowCollapseUp.vue';
 import ArrowBottomRightIcon from 'vue-material-design-icons/ArrowBottomRight.vue';
@@ -111,6 +115,7 @@ interface Emits {
   (e: 'move-to-koma', section: number): void;
   (e: 'find-koma'): void;
   (e: 'replace-koma'): void;
+  (e: 'bulk-delete-koma'): void;
   (e: 'add-koma'): void;
   (e: 'undo-trash'): void;
   (e: 'empty-trash'): void;
@@ -147,6 +152,12 @@ onMounted(() => {
       emits('replace-koma');
     }
   });
+  window.menu.bulkDeleteKoma(() => {
+    if (props.item.type == ItemType.LocalDB) {
+      emits('bulk-delete-koma');
+    }
+  });
+
   window.menu.addKoma(() => {
     emits('add-koma');
   });

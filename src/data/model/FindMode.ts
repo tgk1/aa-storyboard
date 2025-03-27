@@ -3,5 +3,5 @@ export enum FindMode {
   MoveByNumber = 'MoveByNumber',
   Find = 'Find',
   Replace = 'Replace',
-  Delete = 'Delete'
+  BulkDelete = 'BulkDelete'
 }

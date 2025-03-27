@@ -8,6 +8,7 @@
       @add-koma="insertNewKomaAndEdit"
       @find-koma="findbar(FindMode.Find)"
       @replace-koma="findbar(FindMode.Replace)"
+      @bulk-delete-koma="findbar(FindMode.BulkDelete)"
       @move-to-edge="moveToEdge"
       @move-to-koma="moveToKoma"
       @move-by-number="findbar(FindMode.MoveByNumber)"
@@ -20,6 +21,8 @@
       @find-koma="findKoma"
       @replace-koma="replaceKoma"
       @replace-all-koma="replaceAllKoma"
+      @delete-by-string="deleteByString"
+      @delete-by-range="deleteByRange"
       @close="findbar(FindMode.Default)"
     />
     <MLTIndexTab :app-activity="props.appActivity" />
@@ -501,7 +504,6 @@ function replaceKoma(keyword: string, replace: string) {
   }
 }
 function replaceAllKoma(keyword: string, replace: string) {
-  console.log('replaceAllKoma');
   replaceKomaVal.value = replace;
   findKoma(keyword, true);
   for (let i = 0; i < list.value.komas.length; i++) {
@@ -540,6 +542,46 @@ function replaceString(koma: Koma, keyword: string, replace: string) {
       strKoma: JSON.stringify(koma)
     });
   });
+}
+
+// 一括削除
+function deleteByString(keyword: string, contain: boolean) {
+  let del = false;
+  for (let i = 0; i < list.value.komas.length; i++) {
+    const koma = list.value.komas[i];
+    const m = koma.data.match(keyword);
+    if (contain) {
+      del = m != null;
+    } else {
+      del = m == null;
+    }
+    if (del) {
+      const koma = list.value.komas[i];
+      //console.log('DELETE ID: ' + i + ' ' + koma.id);
+      const dic = { path: fileItem.value.url, komaID: koma.id };
+      window.localDB.trashKoma(dic);
+    }
+  }
+  updateList();
+}
+
+function deleteByRange(start: number, end: number, on: boolean) {
+  let del = false;
+  const end1 = end == 999999 ? list.value.komas.length : end;
+  for (let i = 0; i < list.value.komas.length; i++) {
+    if (on) {
+      del = i >= start && i <= end1;
+    } else {
+      del = i < start || i > end1;
+    }
+    if (del) {
+      const koma = list.value.komas[i];
+      //console.log('DELETE ID: ' + i + ' ' + koma.id);
+      const dic = { path: fileItem.value.url, komaID: koma.id };
+      window.localDB.trashKoma(dic);
+    }
+  }
+  updateList();
 }
 </script>
 

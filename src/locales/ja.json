@@ -80,6 +80,21 @@
     "PasteKoma": "ペースト",
     "EditKoma": "編集",
     "TrashKoma": "削除",
+    "DeleteByFind": "検索で削除",
+    "Check": "確認",
+    "DeleteByString": "文字列検索で一括削除",
+    "DeleteKomaContainKeyword": "含むコマを削除",
+    "DeleteKomaDoNotContainKeyword": " 含まないコマを削除",
+    "DeleteByNumber": "番号指定で一括削除",
+    "Move": "移動",
+    "MovePlaceholder": "移動先番号",
+    "FindPlaceholder": "検索文字列",
+    "DeleteByNumberAfter": "以降を削除",
+    "DeleteByNumberPrevious": "以前を削除",
+    "DeleteByRange": "範囲指定で一括削除",
+    "DeleteByRange1": "指定内を削除",
+    "DeleteByRange2": "指定外を削除",
+    "ErrorRange": "対応できない入力値です",
 
     "CreationStart": "作成開始",
     "CreateFrame": "ボタンで、コマを作成します。"
@@ -243,6 +258,7 @@
 
     "FindKoma": "検索",
     "ReplaceKoma": "置換",
+    "BulkDeleteKoma": "一括削除",
     "AddKoma": "コマ作成",
     "AddKomaPart_AA": "AA追加",
     "AddKomaPart_Editor": "空枠追加",
@@ -278,8 +294,10 @@
 
     "Help": "ヘルプ",
     "CheckUpdate": "アップデートの更新を確認",
-    "Site": "サイト",
+    "Site": "配布サイト",
     "Usage": "使い方",
+    "Usage_Merge": "重ね表現作例",
+    "Usage_ImportDAT": "掲示板からのインポート方法",
 
     "COMMENT================================================ Menu系メッセージ ": "Menu系メッセージ",
     "ExportSucceeded": "エクスポートが完了しました。",
