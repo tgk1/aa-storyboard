@@ -167,6 +167,7 @@ export function shitarabaHtmlTypeA2KomaList(data: string, item: Item): KomaList 
       bufHead = m[1].replace(/<a [^>]*?>|<\/a>/g, ' ').replace(/<b>|<\/b>/g, '');
       bufBody = m[2].replace(/<br>/g, '\n');
       bufBody = bufBody.replace(/<a [^>]*?>|<\/a>/g, '');
+      bufBody = bufBody.replace(/<span [^>]*?>|<\/span>/g, '');
       bufBody = String2x.htmldecode(bufBody);
     } else {
       continue;
@@ -217,6 +218,7 @@ export function shitarabaHtmlTypeB2KomaList(data: string, item: Item): KomaList 
       bufBody = bufBody
         .replace(/\n/g, '')
         .replace(/<a [^>]*?>|<\/a>/g, '')
+        .replace(/<span [^>]*?>|<\/span>/g, '')
         .replace(/<br>/g, '\n');
       bufBody = String2x.htmldecode(bufBody);
       console.log(m2);
