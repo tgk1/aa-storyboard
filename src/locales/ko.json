@@ -71,6 +71,8 @@
     "FindKoma": "검색",
     "ReplaceKoma": "치환",
     "ReplaceAllKoma": "모두 치환",
+    "ReplaceKomaInfo1": "Undoはできません",
+    "ReplaceKomaInfo2": "コマ編集終了時の改行付与設定も適用されます",
     "CopyKoma": "복사",
     "CopyImageKoma": "이미지로 복사",
     "Copied": "클립보드에 복사되었습니다.",

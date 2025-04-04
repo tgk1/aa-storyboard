@@ -71,6 +71,8 @@
     "FindKoma": "検索",
     "ReplaceKoma": "置換",
     "ReplaceAllKoma": "一括置換",
+    "ReplaceKomaInfo1": "Undoはできません",
+    "ReplaceKomaInfo2": "コマ編集終了時の改行付与設定も適用されます",
     "CopyKoma": "コピー",
     "CopyImageKoma": "画像としてコピー",
     "Copied": "クリップボードにコピーしました。",

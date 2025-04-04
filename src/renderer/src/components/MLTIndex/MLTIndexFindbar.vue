@@ -53,8 +53,8 @@
       <span class="error">
         <alert-circle-outline-icon :size="12" />
       </span>
-      Undoはできません。<br />
-      キャンバス終了時の改行付与設定も適用されます。
+      {{ $t('IDX-R.ReplaceKomaInfo1') }}<br />
+      {{ $t('IDX-R.ReplaceKomaInfo2') }}
     </div>
   </div>
 
@@ -277,5 +277,6 @@ function deleteByRange(on: boolean) {
 .findbar .white {
   padding: 2px 4px;
   background-color: #fcfcfc;
+  font-size: 12px;
 }
 </style>
