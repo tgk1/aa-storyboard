@@ -49,4 +49,4 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://rss.r401.net/mlt/auto-updates-v2-debug
+  url: https://rss.r401.net/mlt/auto-updates-v2
