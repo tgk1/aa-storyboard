@@ -309,6 +309,15 @@
     "Outputed": "파일로 출력되었습니다.",
     "Outputfailed": "출력에 실패했습니다.",
     "File Exists": "동일한 이름의 파일이 존재합니다."
+  },
+
+  "AppUpdate ================================================ AppUpdate ": "AppUpdate",
+  "AppUpdate": {
+    "ApplicationUpdate": "앱 업데이트",
+    "Restart": "재시작",
+    "Later": "나중에",
+    "Message": "새 버전을 다운로드했습니다. 재부팅하여 업데이트를 적용하시겠습니까?"
   }
+
 }
 

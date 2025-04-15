@@ -1,7 +1,8 @@
 import { BrowserWindow, MenuItem, MenuItemConstructorOptions, dialog, shell } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import ElectronLog from 'electron-log';
 
 import { i18n } from '@/lib/i18n-main';
+import autoUpdater from '@/lib/AutoUpdater';
 import { AppConfig } from '@/data/config/AppConfig';
 import { NavType } from '@model/NavType';
 import { FileConverter } from '@/data/FileConverter';
@@ -379,10 +380,11 @@ export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[]
           id: 'CheckUpdate',
           label: i18n.t('MENU.CheckUpdate'),
           click: () => {
-            // app updater
-            //log.i18n.tports.file.level = 'info';
-            //autoUpdater.logger = log;
-            autoUpdater.checkForUpdatesAndNotify();
+            const log = ElectronLog;
+            const updater = autoUpdater();
+            updater.checkForUpdates();
+            log.info('AutoUpdater: Production');
+            log.info(updater.getFeedURL());
           }
         },
         {

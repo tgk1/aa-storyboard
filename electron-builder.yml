@@ -23,7 +23,7 @@ nsis:
 mac:
   icon: './icon/icon.icns'
   target:
-    - target: dmg
+    - target: default
       arch:
         - arm64
   entitlements: build/entitlements.mac.plist
@@ -49,4 +49,4 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://rss.r401.net/mlt/auto-updates-v2
+  url: https://rss.r401.net/mlt/auto-updates-v2-debug

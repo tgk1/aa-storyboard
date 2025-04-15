@@ -16,7 +16,7 @@ export class LocalDBClient {
     this.db = new Database(filePath);
 
     // SQL DEBUG用
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV == 'development') {
       this.db = new Database(filePath, { verbose: log.info });
     }
 

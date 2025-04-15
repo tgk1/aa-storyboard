@@ -1,4 +1,5 @@
-import { app, shell, BrowserWindow, ipcMain, autoUpdater, dialog } from 'electron';
+import { app, shell, BrowserWindow, ipcMain } from 'electron';
+
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import ElectronStore from 'electron-store';
@@ -16,6 +17,7 @@ import { localMLTClientIPC } from '@/preload/LocalMLTClientIPC';
 import { localDBClientIPC } from '@/preload/LocalDBClientIPC';
 import { MenuBuilder } from '@/menu/MenuBuilder';
 import { enableMenu } from '@/menu/enableMenu';
+import autoUpdater from '@/lib/AutoUpdater';
 
 process.env.ELECTRON_ENABLE_LOGGING = is.dev.toString();
 process.env.ROOT = path.join(__dirname, '..');
@@ -58,7 +60,9 @@ function bootstrap() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
-    //mainWindow.webContents.openDevTools(); // DEBUG
+    if (is.dev) {
+      mainWindow.webContents.openDevTools();
+    }
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -131,7 +135,7 @@ function createMLTSelectorWindow() {
       show: false,
       modal: true,
       parent: aaCanvasWindow
-  });
+    });
   }
 }
 
@@ -266,21 +270,14 @@ ipcMain.on('quit_appWindowAPI', async () => {
 });
 
 // auto updater
+import ElectronLog from 'electron-log';
+const log = ElectronLog;
 electronApp.setAppUserModelId('net.r401.aa-storyboard');
-autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-  };
-
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall()
-  });
-});
-autoUpdater.on('error', (message) => {
-  console.error('There was a problem updating the application');
-  console.error(message);
-});
-autoUpdater.checkForUpdates();
+if (is.dev) {
+  log.info('AutoUpdater: Development : skip');
+} else {
+  const updater = autoUpdater();
+  updater.checkForUpdates();
+  log.info('AutoUpdater: Production');
+  log.info(updater.getFeedURL());
+}

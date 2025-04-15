@@ -3,16 +3,18 @@ import { createI18n } from 'vue-i18n';
 import ja from '@/locales/ja.json';
 import ko from '@/locales/ko.json';
 
+/*
+ * mainプロセスで使用する多言語処理
+ */
 function loc(): string {
   let locale = 'ja';
-  const applocale = app.getLocale();
 
-  // 存在する言語ファイルのロケールを追加
-  if (applocale == 'ja') {
-    locale = applocale;
-  } else if (applocale == 'ko') {
+  // 存在する言語ファイルのロケールがあれば変更する
+  const applocale = app.getLocale();
+  if (applocale == 'ko') {
     locale = applocale;
   }
+
   return locale;
 }
 
