@@ -46,8 +46,8 @@
             <pencil-outline-icon :size="12" />
           </el-button>
         </el-tooltip>
-        <div class="image-space"></div>
       </template>
+      <div class="image-space"></div>
     </el-button-group>
   </div>
 </template>

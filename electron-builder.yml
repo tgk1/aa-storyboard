@@ -23,7 +23,7 @@ nsis:
 mac:
   icon: './icon/icon.icns'
   target:
-    - target: default
+    - target: zip
       arch:
         - arm64
   entitlements: build/entitlements.mac.plist
