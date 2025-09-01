@@ -1,7 +1,7 @@
 import { BrowserWindow, MenuItem, MenuItemConstructorOptions, dialog, shell } from 'electron';
 import ElectronLog from 'electron-log';
 
-import { i18n } from '@/lib/i18n-main';
+import { tMain } from '@/lib/i18n-main';
 import autoUpdater from '@/lib/AutoUpdater';
 import { AppConfig } from '@/data/config/AppConfig';
 import { NavType } from '@model/NavType';
@@ -13,22 +13,22 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
       label: 'AAStoryboard',
       submenu: [
         {
-          label: i18n.t('MENU.About AA Storyboard'),
+          label: tMain('MENU.About AA Storyboard'),
           role: 'about'
         },
         { type: 'separator' },
         {
-          label: i18n.t('MENU.Hide App'),
+          label: tMain('MENU.Hide App'),
           accelerator: 'Command+H',
           role: 'hide'
         },
         {
-          label: i18n.t('MENU.Show All'),
+          label: tMain('MENU.Show All'),
           role: 'unhide'
         },
         { type: 'separator' },
         {
-          label: i18n.t('MENU.Quit'),
+          label: tMain('MENU.Quit'),
           accelerator: 'Command+Q',
           click: () => {
             app.quit();
@@ -39,11 +39,11 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
 
     {
       id: 'File',
-      label: i18n.t('MENU.File'),
+      label: tMain('MENU.File'),
       submenu: [
         {
           id: 'Import',
-          label: i18n.t('MENU.Import'),
+          label: tMain('MENU.Import'),
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             const filePath = dialog.showOpenDialogSync({
               defaultPath: AppConfig.get().PathLocalFolderDB,
@@ -59,15 +59,15 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
             if (filePath == undefined) return;
             const result = FileConverter.import(String(filePath));
             const message = result
-              ? i18n.t('MENU.ImportSucceeded') + '\n' + AppConfig.get().PathLocalFolderDB
-              : i18n.t('MENU.ImportFailed');
+              ? tMain('MENU.ImportSucceeded') + '\n' + AppConfig.get().PathLocalFolderDB
+              : tMain('MENU.ImportFailed');
             dialog.showMessageBox({ type: 'info', message: message });
             browserWindow?.webContents.send('reload-list', 'imported');
           }
         },
         {
           id: 'Export',
-          label: i18n.t('MENU.Export'),
+          label: tMain('MENU.Export'),
           click: () => {
             const filePath = dialog.showSaveDialogSync({
               defaultPath: AppConfig.get().PathLocalFolderDB,
@@ -86,14 +86,14 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
             } else {
               result = FileConverter.exportMLT(AppConfig.getCurrentFile(), filePath);
             }
-            const message = result ? i18n.t('MENU.ExportSucceeded') : i18n.t('MENU.ExportFailed');
+            const message = result ? tMain('MENU.ExportSucceeded') : tMain('MENU.ExportFailed');
             dialog.showMessageBox({ type: 'info', message: message });
           }
         },
         { type: 'separator' },
         {
           id: 'Save',
-          label: i18n.t('MENU.Save'),
+          label: tMain('MENU.Save'),
           accelerator: 'Command+S',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('Save');
@@ -101,7 +101,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'CloseTab',
-          label: i18n.t('MENU.CloseTab'),
+          label: tMain('MENU.CloseTab'),
           accelerator: 'Command+Shift+W',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('CloseTab');
@@ -109,7 +109,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Close',
-          label: i18n.t('MENU.Close'),
+          label: tMain('MENU.Close'),
           accelerator: 'Command+W',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('CloseWindow');
@@ -119,19 +119,19 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
     },
     {
       id: 'Edit',
-      label: i18n.t('MENU.Edit'),
+      label: tMain('MENU.Edit'),
       submenu: [
-        { id: 'Undo', label: i18n.t('MENU.Undo'), role: 'undo' },
-        { id: 'Redo', label: i18n.t('MENU.Redo'), role: 'redo' },
-        { id: 'Cut', label: i18n.t('MENU.Cut'), role: 'cut' },
-        { id: 'Copy', label: i18n.t('MENU.Copy'), role: 'copy' },
-        { id: 'Paste', label: i18n.t('MENU.Paste'), role: 'paste' },
-        { id: 'Delete', label: i18n.t('MENU.Delete'), role: 'delete' },
-        { id: 'SelectAll', label: i18n.t('MENU.SelectAll'), role: 'selectAll' },
+        { id: 'Undo', label: tMain('MENU.Undo'), role: 'undo' },
+        { id: 'Redo', label: tMain('MENU.Redo'), role: 'redo' },
+        { id: 'Cut', label: tMain('MENU.Cut'), role: 'cut' },
+        { id: 'Copy', label: tMain('MENU.Copy'), role: 'copy' },
+        { id: 'Paste', label: tMain('MENU.Paste'), role: 'paste' },
+        { id: 'Delete', label: tMain('MENU.Delete'), role: 'delete' },
+        { id: 'SelectAll', label: tMain('MENU.SelectAll'), role: 'selectAll' },
         { type: 'separator' },
         {
           id: 'FindKoma',
-          label: i18n.t('MENU.FindKoma'),
+          label: tMain('MENU.FindKoma'),
           accelerator: 'Command+F',
           // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
@@ -140,7 +140,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'ReplaceKoma',
-          label: i18n.t('MENU.ReplaceKoma'),
+          label: tMain('MENU.ReplaceKoma'),
           accelerator: 'Command+Shift+F',
           // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
@@ -149,7 +149,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'BulkDeleteKoma',
-          label: i18n.t('MENU.BulkDeleteKoma'),
+          label: tMain('MENU.BulkDeleteKoma'),
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('BulkDeleteKoma');
           }
@@ -157,7 +157,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'AddKoma',
-          label: i18n.t('MENU.AddKoma'),
+          label: tMain('MENU.AddKoma'),
           accelerator: 'Command+N',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('AddKoma');
@@ -166,7 +166,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'AddKomaPart_AA',
-          label: i18n.t('MENU.AddKomaPart_AA'),
+          label: tMain('MENU.AddKomaPart_AA'),
           accelerator: 'Command+I',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('AddKomaPart_AA');
@@ -174,7 +174,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'AddKomaPart_Editor',
-          label: i18n.t('MENU.AddKomaPart_Editor'),
+          label: tMain('MENU.AddKomaPart_Editor'),
           accelerator: 'Command+T',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('AddKomaPart_Editor');
@@ -182,7 +182,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'AddKomaPart_Mini',
-          label: i18n.t('MENU.AddKomaPart_Mini'),
+          label: tMain('MENU.AddKomaPart_Mini'),
           accelerator: 'Command+Shift+T',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('AddKomaPart_Mini');
@@ -191,7 +191,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'CreateFrame',
-          label: i18n.t('MENU.CreateFrame'),
+          label: tMain('MENU.CreateFrame'),
           accelerator: 'Command+K',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('CreateFrame');
@@ -199,7 +199,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'SplitKomaPart',
-          label: i18n.t('MENU.SplitKomaPart'),
+          label: tMain('MENU.SplitKomaPart'),
           accelerator: 'Command+L',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SplitKomaPart');
@@ -207,14 +207,14 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'DeleteLeftCharacters',
-          label: i18n.t('MENU.DeleteLeftCharacters'),
+          label: tMain('MENU.DeleteLeftCharacters'),
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('DeleteCharacters', true);
           }
         },
         {
           id: 'DeleteRightCharacters',
-          label: i18n.t('MENU.DeleteRightCharacters'),
+          label: tMain('MENU.DeleteRightCharacters'),
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('DeleteCharacters', false);
           }
@@ -222,24 +222,24 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
       ]
     },
     {
-      label: i18n.t('MENU.View'),
+      label: tMain('MENU.View'),
       submenu: [
         {
-          label: i18n.t('MENU.FullScreen'),
+          label: tMain('MENU.FullScreen'),
           accelerator: 'Ctrl+Command+F',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.setFullScreen(!browserWindow.isFullScreen());
           }
         },
         {
-          label: i18n.t('MENU.Minimize'),
+          label: tMain('MENU.Minimize'),
           accelerator: 'Command+M',
           role: 'minimize'
         },
         { type: 'separator' },
         {
           id: 'SwitchTabMode',
-          label: i18n.t('MENU.SwitchTabMode'),
+          label: tMain('MENU.SwitchTabMode'),
           accelerator: 'Command+\\',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SwitchTabMode');
@@ -247,7 +247,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'SelectPrevTab',
-          label: i18n.t('MENU.SelectPrevTab'),
+          label: tMain('MENU.SelectPrevTab'),
           accelerator: 'Command+[',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectTab', true);
@@ -255,7 +255,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'SelectNextTab',
-          label: i18n.t('MENU.SelectNextTab'),
+          label: tMain('MENU.SelectNextTab'),
           accelerator: 'Command+]',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectTab', false);
@@ -264,7 +264,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'SwitchListMode',
-          label: i18n.t('MENU.SwitchListMode'),
+          label: tMain('MENU.SwitchListMode'),
           accelerator: 'Command+L',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SwitchListMode');
@@ -272,7 +272,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'MoveToTop',
-          label: i18n.t('MENU.MoveToTop'),
+          label: tMain('MENU.MoveToTop'),
           accelerator: 'Command+Up',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('MoveToEdge', true);
@@ -280,7 +280,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'MoveToBottom',
-          label: i18n.t('MENU.MoveToBottom'),
+          label: tMain('MENU.MoveToBottom'),
           accelerator: 'Command+Down',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('MoveToEdge', false);
@@ -288,7 +288,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'MoveByNumber',
-          label: i18n.t('MENU.MoveByNumber'),
+          label: tMain('MENU.MoveByNumber'),
           accelerator: 'Command+G',
           // DevToolsをONにしていると起動直後にこのショートカットが動作しない。ツールバーから一度操作すると動作する フォーカスが動作しない
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
@@ -298,7 +298,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'FontSizeUp',
-          label: i18n.t('MENU.FontSizeUp'),
+          label: tMain('MENU.FontSizeUp'),
           accelerator: 'Option+Command+Up',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('FontSize', true);
@@ -306,7 +306,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'FontSizeDown',
-          label: i18n.t('MENU.FontSizeDown'),
+          label: tMain('MENU.FontSizeDown'),
           accelerator: 'Option+Command+Down',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('FontSize', false);
@@ -315,7 +315,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         { type: 'separator' },
         {
           id: 'VisibleButtons',
-          label: i18n.t('MENU.VisibleButtons'),
+          label: tMain('MENU.VisibleButtons'),
           accelerator: 'Command+B',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('VisibleButtons');
@@ -323,7 +323,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'VisibleKomaPartsList',
-          label: i18n.t('MENU.VisibleKomaPartsList'),
+          label: tMain('MENU.VisibleKomaPartsList'),
           accelerator: 'Command+N',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('VisibleKomaPartsList');
@@ -334,11 +334,11 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
 
     {
       id: 'SideBar',
-      label: i18n.t('MENU.SideBar'),
+      label: tMain('MENU.SideBar'),
       submenu: [
         {
           id: 'Nav1',
-          label: i18n.t('MENU.Nav1'),
+          label: tMain('MENU.Nav1'),
           accelerator: 'Ctrl+1',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.LocalFolderDB);
@@ -346,7 +346,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav2',
-          label: i18n.t('MENU.Nav2'),
+          label: tMain('MENU.Nav2'),
           accelerator: 'Ctrl+2',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.WebFolderMLT);
@@ -354,7 +354,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav3',
-          label: i18n.t('MENU.Nav3'),
+          label: tMain('MENU.Nav3'),
           accelerator: 'Ctrl+3',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.LocalFolderMLT);
@@ -362,7 +362,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav4',
-          label: i18n.t('MENU.Nav4'),
+          label: tMain('MENU.Nav4'),
           accelerator: 'Ctrl+4',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.MarkFolder);
@@ -370,7 +370,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav5',
-          label: i18n.t('MENU.Nav5'),
+          label: tMain('MENU.Nav5'),
           accelerator: 'Ctrl+5',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.RecentFolder);
@@ -378,7 +378,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav6',
-          label: i18n.t('MENU.Nav6'),
+          label: tMain('MENU.Nav6'),
           accelerator: 'Ctrl+6',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.ReplicaFolder);
@@ -386,7 +386,7 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
         },
         {
           id: 'Nav7',
-          label: i18n.t('MENU.Nav7'),
+          label: tMain('MENU.Nav7'),
           accelerator: 'Ctrl+7',
           click: (_menuItem: MenuItem, browserWindow: BrowserWindow | undefined) => {
             browserWindow?.webContents.send('SelectNav', NavType.Config);
@@ -396,11 +396,11 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
     },
 
     {
-      label: i18n.t('MENU.Help'),
+      label: tMain('MENU.Help'),
       submenu: [
         {
           id: 'CheckUpdate',
-          label: i18n.t('MENU.CheckUpdate'),
+          label: tMain('MENU.CheckUpdate'),
           click: async () => {
             const log = ElectronLog;
             const updater = autoUpdater();
@@ -410,28 +410,28 @@ export function darwinTemplate(app: Electron.App): MenuItemConstructorOptions[] 
           }
         },
         {
-          label: i18n.t('MENU.Site'),
+          label: tMain('MENU.Site'),
           click: async () => {
             await shell.openExternal('https://rss.r401.net/mlt/');
           }
         },
         {
           id: 'Usage',
-          label: i18n.t('MENU.Usage'),
+          label: tMain('MENU.Usage'),
           click: async () => {
             await shell.openExternal('https://rss.r401.net/mlt/usage.html');
           }
         },
         {
           id: 'Usage_Merge',
-          label: i18n.t('MENU.Usage_Merge'),
+          label: tMain('MENU.Usage_Merge'),
           click: async () => {
             await shell.openExternal('https://rss.r401.net/mlt/usage_merge.html');
           }
         },
         {
           id: 'Usage_ImportDAT',
-          label: i18n.t('MENU.Usage_ImportDAT'),
+          label: tMain('MENU.Usage_ImportDAT'),
           click: async () => {
             await shell.openExternal('https://rss.r401.net/mlt/usage_import_dat.html');
           }

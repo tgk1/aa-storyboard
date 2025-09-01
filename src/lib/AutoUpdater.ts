@@ -2,17 +2,17 @@ import { dialog } from 'electron';
 import electronUpdater, { type AppUpdater } from 'electron-updater';
 import ElectronLog from 'electron-log';
 
-import { i18n } from '@/lib/i18n-main';
+import { tMain } from '@/lib/i18n-main';
 
 export default function autoUpdeter(): AppUpdater {
   const { autoUpdater } = electronUpdater;
 
   autoUpdater.on('update-downloaded', (_event) => {
     const dialogOpts = {
-      title: i18n.t('AppUpdate.ApplicationUpdate'),
-      buttons: [i18n.t('AppUpdate.Restart'), i18n.t('AppUpdate.Later')],
+      title: tMain('AppUpdate.ApplicationUpdate'),
+      buttons: [tMain('AppUpdate.Restart'), tMain('AppUpdate.Later')],
       message: _event.version,
-      detail: i18n.t('AppUpdate.Message')
+      detail: tMain('AppUpdate.Message')
     };
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {

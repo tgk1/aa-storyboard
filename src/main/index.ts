@@ -16,6 +16,7 @@ import { markDBClientIPC } from '@/preload/MarkDBClientIPC';
 import { localMLTClientIPC } from '@/preload/LocalMLTClientIPC';
 import { localDBClientIPC } from '@/preload/LocalDBClientIPC';
 import { MenuBuilder } from '@/menu/MenuBuilder';
+import { initI18nMain } from '@/lib/i18n-main';
 import { enableMenu } from '@/menu/enableMenu';
 import autoUpdater from '@/lib/AutoUpdater';
 
@@ -38,7 +39,12 @@ let textEditorWindow: BrowserWindow;
 // 起動
 //
 appInit();
-app.whenReady().then(bootstrap);
+app.whenReady().then(async () => {
+  await initI18nMain();
+  MenuBuilder.build(app);
+  await bootstrap();
+});
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();

@@ -1,26 +1,46 @@
+// src/lib/i18n-main.ts (for main process)
 import { app } from 'electron';
-import { createI18n } from 'vue-i18n';
 import ja from '@/locales/ja.json';
 import ko from '@/locales/ko.json';
+import zhTW from '@/locales/zh-TW.json';
 
-/*
- * mainプロセスで使用する多言語処理
- */
-function loc(): string {
-  let locale = 'ja';
+type Dict = Record<string, any>;
+const messages: Record<string, Dict> = { ja, ko, 'zh-TW': zhTW };
 
-  // 存在する言語ファイルのロケールがあれば変更する
-  const applocale = app.getLocale();
-  if (applocale == 'ko') {
-    locale = applocale;
-  }
+let currentLocale = 'ja';
 
-  return locale;
+function normalizeLocale(raw: string): keyof typeof messages {
+  // 規整可能的變體：zh, zh-TW, zh_Hant_TW, zh-Hant…
+  if (!raw) return 'ja';
+  const v = raw.toLowerCase().replace('_', '-');
+  if (v.startsWith('zh')) return 'zh-TW';
+  if (v.startsWith('ko')) return 'ko';
+  return 'ja';
 }
 
-/*
- *  I18n : vue-i18nの基本的な使い方.
- *  i18n : <script>内で使用する。 例) i18n.t('Warning')
- */
-const I18n = createI18n({ locale: loc(), messages: { ja, ko } }); // 存在する言語ファイルのロケールを追加
-export const i18n = I18n.global;
+function getByPath(obj: Dict, path: string): any {
+  return path.split('.').reduce((o, k) => (o && o[k] != null ? o[k] : undefined), obj);
+}
+
+export function initI18nMain(explicit?: string) {
+  // need call after app.whenReady()
+  const fromApp = app.getLocale();
+  const want = explicit || fromApp;
+  currentLocale = normalizeLocale(want);
+  console.log('[i18n-main] resolved locale =', currentLocale, '(raw:', want, ')');
+}
+
+export function setLocaleMain(next: string) {
+  currentLocale = normalizeLocale(next);
+  console.log('[i18n-main] changed locale =', currentLocale);
+}
+
+export function tMain(key: string, vars?: Record<string, any>): string {
+  const dict = messages[currentLocale] || messages['ja'];
+  let val = getByPath(dict, key);
+  if (typeof val !== 'string') return key;
+  if (vars) {
+    val = val.replace(/\{\{(\w+)\}\}/g, (_, k) => (vars[k] ?? ''));
+  }
+  return val;
+}
