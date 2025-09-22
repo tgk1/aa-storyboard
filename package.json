@@ -1,6 +1,6 @@
 {
   "name": "aa-storyboard",
-  "version": "2.1.3",
+  "version": "2.1.4-alpha",
   "description": "AsciiArt Editor",
   "main": "./out/main/index.js",
   "author": "tgk",
@@ -27,7 +27,7 @@
     "@electron-toolkit/utils": "^2.0.0",
     "better-sqlite3": "^8.7.0",
     "electron-log": "^4.4.8",
-    "electron-store": "^8.1.0",
+    "electron-store": "^8.2.0",
     "electron-updater": "^6.1.1",
     "element-plus": "^2.3.14",
     "he": "^1.2.0",
