@@ -129,7 +129,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { ElMessage } from 'element-plus';
-import { i18n } from '@/lib/i18n';
+import { i18n } from '@/lib/i18n-renderer';
 
 import ArrowBottomRightIcon from 'vue-material-design-icons/ArrowBottomRight.vue';
 import ChevronUpIcon from 'vue-material-design-icons/ChevronUp.vue';

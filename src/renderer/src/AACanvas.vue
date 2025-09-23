@@ -68,7 +68,7 @@ import AACanvasToolbar from '@components/AACanvas/AACanvasToolbar.vue';
 import AACanvasKomaPartsList from '@components/AACanvas/AACanvasKomaPartsList.vue';
 import MergeLayerDialog from '@components/Dialog/MergeLayerDialog.vue';
 
-import { i18n } from '@/lib/i18n';
+import { i18n } from '@/lib/i18n-renderer';
 import { wait } from '@/lib/wait';
 
 import { userAACanvasDataStore } from '@/data/config/StoreAACanvas';

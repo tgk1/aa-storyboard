@@ -36,7 +36,7 @@ import { KomaPart } from '@/data/model';
 import TextEditorToolbar from '@components/TextEditor/TextEditorToolbar.vue';
 import TextEditorMain from '@components/TextEditor/TextEditorMain.vue';
 import CharactersList from '@components/TextEditor/CharactersList.vue';
-import { i18n } from '@/lib/i18n';
+import { i18n } from '@/lib/i18n-renderer';
 import { wait } from '@/lib/wait';
 
 const store = userTextEditorDataStore();

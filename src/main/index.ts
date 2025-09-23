@@ -70,6 +70,7 @@ function bootstrap() {
     return { action: 'deny' };
   });
 
+  MenuBuilder.build(app); //electronのappが'ready'状態でないと適切なlocaleが取得できないのでここにある。
   enableMenu(AppActivity.MainIndex);
 
   createAACanvasWindow();
@@ -172,7 +173,6 @@ function saveWindow(winVar: BrowserWindow | null) {
 function appInit() {
   ElectronStore.initRenderer();
   AppConfig.initData();
-  MenuBuilder.build(app);
   AppConfig.applyTheme(AppConfig.get().Theme);
 
   appConfigIPC();
@@ -269,15 +269,19 @@ ipcMain.on('quit_appWindowAPI', async () => {
   }
 });
 
+updater();
+
 // auto updater
 import ElectronLog from 'electron-log';
-const log = ElectronLog;
-electronApp.setAppUserModelId('net.r401.aa-storyboard');
-if (is.dev) {
-  log.info('AutoUpdater: Development : skip');
-} else {
-  const updater = autoUpdater();
-  updater.checkForUpdates();
-  log.info('AutoUpdater: Production');
-  log.info(updater.getFeedURL());
+function updater() {
+  const log = ElectronLog;
+  electronApp.setAppUserModelId('net.r401.aa-storyboard');
+  if (is.dev) {
+    log.info('AutoUpdater: Development : skip');
+  } else {
+    const updater = autoUpdater();
+    updater.checkForUpdates();
+    log.info('AutoUpdater: Production');
+    log.info(updater.getFeedURL());
+  }
 }

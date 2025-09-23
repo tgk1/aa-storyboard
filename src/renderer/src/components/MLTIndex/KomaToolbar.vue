@@ -66,7 +66,7 @@ import ContentPasteIcon from 'vue-material-design-icons/ContentPaste.vue';
 import PencilOutlineIcon from 'vue-material-design-icons/PencilOutline.vue';
 import TrashCanOutlineIcon from 'vue-material-design-icons/TrashCanOutline.vue';
 
-import { i18n } from '@/lib/i18n';
+import { i18n } from '@/lib/i18n-renderer';
 import { AppActivity, Item, ItemType, Koma, KomaPart, KomaUtil } from '@model/index';
 import { ListManager } from '@/data/ListManager';
 import { String2image } from '@/char/String2image';

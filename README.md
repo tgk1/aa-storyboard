@@ -29,7 +29,7 @@ $ npm run dev
 
 ```bash
 # For windows
-# 管理者モードのコンソールで実行すること。しないとsymlinkエラーが発生する。
+# symlinkエラーが発生するときは管理者モードのコンソールで実行すること。
 $ npm run build:win
 
 # For macOS
@@ -45,7 +45,7 @@ $ npm run build:mac
 ```
 
 ### 補足
-* [Electron⚡️Vite](https://electron-vite.github.io/) と、そのテンプレートをその使っています。"/src/renderer/src"とあるので、たぶん(electron-vite-vue v1.0.0)のはずです。
+* [Electron⚡️Vite](https://electron-vite.github.io/) と、そのテンプレートをその使っています。
 * [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) はネイティブモジュールを使用しています。これが原因でビルド時にエラーになるかもしれません。エラーの内容によってはbetter-sqlite3のトラブルシューティングガイドで解決できます。
-* /locales/のyamlファイルと/lib/i18nファイルで多言語化できるはずです。
+* /locales/のyamlファイルと/lib/i18n.tsファイルで多言語化できるはずです。
 

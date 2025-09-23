@@ -2,10 +2,11 @@ import { dialog } from 'electron';
 import electronUpdater, { type AppUpdater } from 'electron-updater';
 import ElectronLog from 'electron-log';
 
-import { i18n } from '@/lib/i18n-main';
+import { I18n } from '@/lib/i18n-main';
 
 export default function autoUpdeter(): AppUpdater {
   const { autoUpdater } = electronUpdater;
+  const i18n = I18n().global;
 
   autoUpdater.on('update-downloaded', (_event) => {
     const dialogOpts = {

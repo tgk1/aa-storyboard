@@ -1,13 +1,15 @@
 import { BrowserWindow, MenuItem, MenuItemConstructorOptions, dialog, shell } from 'electron';
 import ElectronLog from 'electron-log';
 
-import { i18n } from '@/lib/i18n-main';
+import { I18n } from '@/lib/i18n-main';
 import autoUpdater from '@/lib/AutoUpdater';
 import { AppConfig } from '@/data/config/AppConfig';
 import { NavType } from '@model/NavType';
 import { FileConverter } from '@/data/FileConverter';
 
 export function windowsTemplate(app: Electron.App): MenuItemConstructorOptions[] {
+  const i18n = I18n().global;
+
   const menu: MenuItemConstructorOptions[] = [
     {
       id: 'File',

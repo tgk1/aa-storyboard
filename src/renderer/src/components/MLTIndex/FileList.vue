@@ -161,7 +161,7 @@ import IconParent from './IconParent.vue';
 import IconStar from './IconStar.vue';
 import InitialStartupPopFile from './InitialStartupPopFile.vue';
 
-import { i18n } from '@/lib/i18n';
+import { i18n } from '@/lib/i18n-renderer';
 import { AppActivity, Item, ItemList, ItemSort, ItemType, ItemUtil } from '@model/index';
 import { ListManager } from '@/data/ListManager';
 
