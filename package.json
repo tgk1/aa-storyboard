@@ -1,6 +1,6 @@
 {
   "name": "aa-storyboard",
-  "version": "2.1.4-alpha",
+  "version": "2.1.4",
   "description": "AsciiArt Editor",
   "main": "./out/main/index.js",
   "author": "tgk",

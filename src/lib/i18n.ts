@@ -9,6 +9,7 @@ export function selectLocale(applocale: string): string {
   // ロケールの一覧 https://chromium.googlesource.com/chromium/src/+/66.0.3359.158/ui/base/l10n/l10n_util.cc
   switch (applocale) {
     case 'ko':
+    case 'zh-HK':
     case 'zh-TW':
       return applocale;
     default:
@@ -17,15 +18,16 @@ export function selectLocale(applocale: string): string {
 }
 
 //
-// applocale
+// applocaleはメイン/レンダープロセスでロケールの取得方法が異なる
 //   renderer process : window.appConfig.getLocale()
-//   main process : はapp.getLocale()
+//   main process : app.getLocale()
 export const create_i18n = (applocale: string) => {
   return createI18n({
     locale: selectLocale(applocale),
     messages: {
       ja: ja,
       ko: ko,
+      'zh-HK': zhTW,
       'zh-TW': zhTW
     }
   });
